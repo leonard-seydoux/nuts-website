@@ -1,0 +1,269 @@
+{% extends "main.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    /* On the home page, the header takes the color of the hero (rather than
+       being transparent): no gap shows under it, whatever its height */
+    [data-md-component="container"] .md-header,
+    body .md-header {
+        background-color: var(--nuts-hero-background) !important;
+        box-shadow: none !important;
+        transition: none !important;
+    }
+
+    /* Make tabs transparent */
+    [data-md-component="container"] .md-tabs,
+    body .md-tabs {
+        background-color: transparent !important;
+        transition: none !important;
+    }
+
+    /* When scrolled, restore original colors with faster transition */
+    body.scrolled .md-header {
+        background-color: var(--nuts-bar-background) !important;
+        box-shadow: 0 0 0.2rem rgba(0, 0, 0, .1), 0 0.2rem 0.4rem rgba(0, 0, 0, .2) !important;
+        transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+    }
+
+    body.scrolled .md-tabs {
+        background-color: var(--md-primary-fg-color--light) !important;
+        transition: background-color 0.05s ease !important;
+    }
+
+    /* Dark text on the light hero, default colors once scrolled */
+    body:not(.scrolled) .md-header__inner,
+    body:not(.scrolled) .md-header__button,
+    body:not(.scrolled) .md-header__topic,
+    body:not(.scrolled) .md-logo,
+    body:not(.scrolled) .md-header .md-nav__link,
+    body:not(.scrolled) .md-tabs__link {
+        color: var(--nuts-hero-text) !important;
+    }
+
+    body:not(.scrolled) .md-header .md-icon svg,
+    body:not(.scrolled) .md-tabs .md-icon svg {
+        fill: var(--nuts-hero-text) !important;
+    }
+
+    /* Hero section */
+    .mdx-hero {
+        min-height: 100vh;
+        margin-top: -2.4rem;  /* header height: hero slides under it */
+        display: flex;
+        flex-direction: column;  /* title, then video */
+        align-items: center;
+        justify-content: center;
+        padding-top: 2.4rem;  /* clear the header */
+        padding-bottom: 7rem;  /* room for the scroll arrow, lifts the globe */
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Hero background, set in extra.css (the video is transparent) */
+    .mdx-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--nuts-hero-background);
+        z-index: -2;
+    }
+
+    /* Transparent video under the title (illustrations/globe_seismes.py) */
+    .mdx-hero__video {
+        display: block;
+        width: min(90vw, 48vh);  /* title, buttons and globe fit one screen */
+        aspect-ratio: 1;
+    }
+
+
+    /* Hero content */
+    .mdx-hero__content {
+        position: relative;
+        z-index: 1;
+        color: var(--nuts-hero-text);
+        padding: 1.5rem 3rem 0.5rem;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    .mdx-hero__content h1 {
+        color: var(--nuts-hero-text) !important;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .mdx-hero__content p {
+        color: var(--nuts-hero-text);
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    /* Buttons announcing the upcoming rencontres */
+    .mdx-hero__events {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+    }
+
+    .mdx-hero__event {
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem 1.1rem;
+        border: 2px solid var(--mpl-pink);
+        border-radius: 0.5rem;
+        color: var(--nuts-hero-text) !important;
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.4;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .mdx-hero__event span {
+        font-size: 0.75rem;
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    .mdx-hero__event:hover {
+        background-color: var(--mpl-pink);
+        color: #fff !important;
+    }
+
+    @media screen and (max-width: 768px) {
+        .mdx-hero__content h1 {
+            font-size: 2rem;
+        }
+
+        .mdx-hero__content p {
+            font-size: 1rem;
+        }
+
+        .mdx-hero__content {
+            padding: 2rem;
+        }
+
+        .mdx-hero {
+            min-height: 100vh;
+        }
+    }
+
+    /* Scroll indicator arrow */
+    /* Pinned to the bottom of the window (not of the hero), so that it stays
+       visible however tall the hero content gets; hidden once scrolled */
+    .scroll-indicator {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .scroll-indicator:hover {
+        opacity: 1;
+    }
+
+    .scroll-indicator svg {
+        width: 2rem;
+        height: 2rem;
+        fill: var(--mpl-pink);
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-10px);
+        }
+
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+
+    /* Hide scroll indicator when scrolled */
+    body.scrolled .scroll-indicator {
+        opacity: 0;
+        pointer-events: none;
+    }
+</style>
+{% endblock %}
+
+{% block tabs %}
+{{ super() }}
+
+<!-- Hero section -->
+<section class="mdx-container">
+    <div class="mdx-hero">
+        <div class="mdx-hero__content">
+
+            <script>
+                // Add 'scrolled' class to body when user scrolls down
+                let scrollTimeout;
+                let lastScrollY = 0;
+
+                window.addEventListener('scroll', function () {
+                    const currentScrollY = window.scrollY;
+
+                    // If scrolling up quickly, remove class immediately
+                    if (currentScrollY < lastScrollY && currentScrollY <= 100) {
+                        clearTimeout(scrollTimeout);
+                        document.body.classList.remove('scrolled');
+                    }
+                    // If scrolling down, add class with small delay to avoid flickering
+                    else if (currentScrollY > 100) {
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            document.body.classList.add('scrolled');
+                        }, 50);
+                    } else {
+                        clearTimeout(scrollTimeout);
+                        document.body.classList.remove('scrolled');
+                    }
+
+                    lastScrollY = currentScrollY;
+                });
+            </script>
+            <h1>NuTS</h1>
+            <p>Le réseau thématique de l'INSU consacré au Numérique pour la Terre Solide</p>
+            <div class="mdx-hero__events">
+                <a class="mdx-hero__event" href="{{ 'workshops/gaia-2027/' | url }}">
+                    <span>Les Houches · janvier 2027</span>
+                    Journées thématiques GAIA →
+                </a>
+                <a class="mdx-hero__event" href="{{ 'workshops/workshop-2027/' | url }}">
+                    <span>Nantes · mai 2027</span>
+                    5ème rencontre plénière →
+                </a>
+            </div>
+        </div>
+        <video class="mdx-hero__video alpha-video" autoplay muted loop playsinline
+            data-base="{{ 'videos/' | url }}" data-random></video>
+        <div class="scroll-indicator" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+            </svg>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="home-content" style="position: relative; z-index: 1;">
+    {{ super() }}
+</div>
+{% endblock %}

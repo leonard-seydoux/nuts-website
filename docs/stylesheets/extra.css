@@ -1,0 +1,643 @@
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+/* 
+ * NuTS Custom Color Scheme
+ * Based on the original nuts.univ-nantes.io website
+ */
+
+:root {
+
+    /* Matplotlib default palette (tab10), used as the site's color scheme */
+    --mpl-blue: #1f77b4;
+    /* C0 */
+    --mpl-orange: #ff7f0e;
+    /* C1 */
+    --mpl-green: #2ca02c;
+    /* C2 */
+    --mpl-red: #d62728;
+    /* C3 */
+    --mpl-purple: #9467bd;
+    /* C4 */
+    --mpl-brown: #8c564b;
+    /* C5 */
+    --mpl-pink: #e377c2;
+    /* C6 */
+    --mpl-gray: #7f7f7f;
+    /* C7 */
+    --mpl-olive: #bcbd22;
+    /* C8 */
+    --mpl-cyan: #17becf;
+    /* C9 */
+    --mpl-blue-light: color-mix(in srgb, var(--mpl-blue) 75%, white);
+
+    /* Home page hero, behind the transparent globe video */
+    --nuts-hero-background: color-mix(in srgb, var(--mpl-olive) 25%, white);
+    --nuts-hero-text: #222222;
+
+    /* Primary colors */
+    --md-primary-fg-color: #000000;
+    --md-primary-fg-color--light: var(--mpl-orange);
+    --md-primary-fg-color--dark: var(--mpl-orange);
+    --md-primary-bg-color: #ffffff;
+
+    /* Accent colors */
+    --md-accent-fg-color: var(--mpl-blue);
+    --md-accent-fg-color--transparent: color-mix(in srgb, var(--mpl-blue) 10%, transparent);
+
+    /* Links */
+    --md-typeset-a-color: var(--mpl-pink);
+
+    /* Code blocks */
+    --md-code-bg-color: #f5f5f5;
+    --md-code-fg-color: #2e3141;
+
+    /* Typography */
+    --md-text-font: "Source Sans Pro", sans-serif;
+}
+
+/* Light theme colors */
+[data-md-color-scheme="default"] {
+
+    /* Header */
+    --md-primary-fg-color: #505050;
+    --md-primary-fg-color--light: var(--mpl-blue);
+    /* navigation tabs */
+    --md-primary-fg-color--dark: var(--mpl-orange);
+    --md-default-bg-color: color-mix(in srgb, var(--mpl-olive) 14%, white);  /* page, lighter than the hero */
+    --nuts-bar-background: var(--mpl-olive);  /* header and mobile menu title */
+    --nuts-title-color: var(--mpl-olive);  /* section titles of the inner pages */
+    --nuts-bar-text: #222222;  /* white is hard to read on olive */
+    --md-default-fg-color: #222222;
+}
+
+/* Dark theme - slate scheme */
+[data-md-color-scheme="slate"] {
+
+    /* Home page hero: darker blue, light text */
+    --nuts-hero-background: color-mix(in srgb, var(--mpl-blue) 25%, #212121);
+    --nuts-hero-text: #f0f0f0;
+
+    /* Header */
+    --md-primary-fg-color: #000000;
+
+    /* Navigation tabs */
+    --md-primary-fg-color--light: var(--mpl-blue);
+
+
+    --md-primary-fg-color--dark: var(--mpl-orange);
+    --md-accent-fg-color: var(--mpl-blue-light);
+    --md-accent-fg-color--transparent: color-mix(in srgb, var(--mpl-blue-light) 10%, transparent);
+    --md-default-bg-color: color-mix(in srgb, var(--mpl-blue) 16%, #1c1c1c);  /* page, darker than the hero */
+    --nuts-bar-background: var(--mpl-blue);  /* header and mobile menu title */
+    --nuts-title-color: var(--mpl-blue);  /* section titles of the inner pages */
+    --nuts-bar-text: #ffffff;
+    --md-default-fg-color: #ffffff;
+    --md-typeset-a-color: var(--mpl-pink);
+}
+
+/* Custom styling for info admonitions */
+.md-typeset .admonition.info,
+.md-typeset details.info {
+    border-color: var(--mpl-blue);
+}
+
+.md-typeset .info>.admonition-title,
+.md-typeset .info>summary {
+    background-color: color-mix(in srgb, var(--mpl-blue) 10%, transparent);
+    border-color: var(--mpl-blue);
+}
+
+/* Note admonitions */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+    border-color: var(--mpl-cyan);
+}
+
+.md-typeset .note>.admonition-title,
+.md-typeset .note>summary {
+    background-color: color-mix(in srgb, var(--mpl-cyan) 10%, transparent);
+}
+
+.md-typeset .admonition.note>.admonition-title::before,
+.md-typeset .note>summary::before {
+    background-color: var(--mpl-cyan);
+}
+
+/* Header and navigation */
+.md-header {
+    background-color: var(--nuts-bar-background) !important;
+    color: var(--nuts-bar-text);
+}
+
+/* Navigation tabs inside the header (overrides/partials/header.html):
+   shown on wide screens, where they replace the site title */
+.md-header__tabs {
+    display: none;
+    flex-grow: 1;
+    height: 2.4rem;
+    overflow: hidden;
+}
+
+.md-header__tabs .md-tabs__link {
+    margin-top: 0.6rem;
+}
+
+@media screen and (min-width: 76.25em) {
+    .md-header__tabs {
+        display: block;
+    }
+
+    .md-header__title {
+        display: none;
+    }
+}
+
+.md-tabs {
+    background-color: var(--md-primary-fg-color--light) !important;
+    color: #222222;
+    /* white text is hard to read on cyan */
+}
+
+.md-tabs__link {
+    font-size: 0.85rem !important;
+}
+
+.md-header__topic {
+    font-size: 0.9rem !important;
+}
+
+
+/* Buttons */
+.md-button {
+    color: var(--mpl-blue);
+    border-color: var(--mpl-blue);
+}
+
+.md-button--primary {
+    background-color: var(--mpl-blue);
+    color: #ffffff;
+    border-color: var(--mpl-blue);
+}
+
+.md-button--primary:hover,
+.md-button--primary:focus {
+    background-color: var(--mpl-blue-light);
+    border-color: var(--mpl-blue-light);
+}
+
+
+/* Search highlighting */
+.md-search-result__meta {
+    background-color: var(--mpl-blue);
+}
+
+/* Scrollbar (webkit browsers) */
+::-webkit-scrollbar-thumb {
+    background-color: var(--mpl-blue);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--mpl-blue-light);
+}
+
+/* Typography */
+.md-typeset h1 {
+    font-size: 4rem;
+    font-weight: 100;
+}
+
+.md-typeset h2 {
+    font-weight: 700;
+}
+
+/* Links in pink, red on hover, in both themes. Material's palette sets the
+   link color on body[data-md-color-scheme][data-md-color-primary]: a more
+   specific selector is needed to override it */
+body[data-md-color-scheme][data-md-color-primary] {
+    --md-typeset-a-color: var(--mpl-pink);
+}
+
+.md-typeset a:focus,
+.md-typeset a:hover {
+    color: var(--mpl-red);
+}
+
+/* Paragraphs and list items at the same size */
+.md-typeset p,
+.md-typeset li {
+    font-size: 1.08rem;
+    line-height: 1.45;
+}
+
+/* Partner Institutions Section */
+.mdx-partners {
+    padding: 2rem;
+}
+
+.mdx-partners__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mdx-partners__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.mdx-partners__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.mdx-partners__logo:hover {
+    transform: scale(1.05);
+}
+
+.mdx-partners__logo img {
+    max-width: 180px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.mdx-partners__logo:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .mdx-partners__grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 2rem;
+    }
+
+    .mdx-partners__logo img {
+        max-width: 140px;
+        max-height: 60px;
+    }
+}
+
+/* Headings always start below floated images (align=left/right) */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+    clear: both;
+}
+
+/* Image next to text, text vertically centered on the image */
+.md-typeset .figure-text {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.md-typeset .figure-text>div {
+    flex: 1;
+}
+
+.md-typeset .figure-text>div> :first-child {
+    margin-top: 0;
+}
+
+.md-typeset .figure-text>p:has(> img:only-child),
+.md-typeset .figure-text>p:has(> video:only-child) {
+    flex: 0 0 45%;
+    margin: 0;
+}
+
+.md-typeset .figure-text>p>img,
+.md-typeset .figure-text>p>video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Stack image and text on narrow screens */
+@media screen and (max-width: 44.9375em) {
+    .md-typeset .figure-text {
+        flex-direction: column;
+    }
+}
+
+/* Home page: more breathing room between sections */
+.md-typeset .home-content h2 {
+    margin-top: 4.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.md-typeset .home-content .figure-text {
+    gap: 3.5rem;
+    margin: 5rem 0;
+}
+
+.md-typeset .home-content .figure-text>p>img {
+    border-radius: 0.4rem;
+}
+
+@media screen and (max-width: 44.9375em) {
+    .md-typeset .home-content .figure-text {
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+}
+
+
+/* ------------------------------------------------------------------ */
+/* Inner pages                                                         */
+/* ------------------------------------------------------------------ */
+
+/* Title banner (overrides/main.html): the colors of the home page hero */
+.page-hero {
+    background-color: var(--nuts-hero-background);
+    color: var(--nuts-hero-text);
+    padding: 2.5rem 0;
+}
+
+.page-hero__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0 1.2rem;
+}
+
+.page-hero h1 {
+    margin: 0;
+    color: var(--nuts-hero-text);
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.page-hero p {
+    margin: 1rem 0 0;
+    max-width: 40rem;
+    font-size: 1.2rem;
+    opacity: 0.85;
+}
+
+.page-hero p.page-hero__abstract {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    opacity: 0.8;
+}
+
+.page-hero__video {
+    flex: 0 0 auto;
+    width: 20rem;
+    aspect-ratio: 1;
+}
+
+/* The banner already shows the title */
+body:has(.page-hero) .md-content__inner>h1:first-of-type {
+    display: none;
+}
+
+@media screen and (max-width: 44.9375em) {
+    .page-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .page-hero__video {
+        width: 11rem;
+    }
+}
+
+/* Section titles: olive in the light theme, blue in the dark one */
+body:has(.page-hero) .md-typeset h2,
+body:has(.page-hero) .md-typeset h3 {
+    color: var(--nuts-title-color);
+}
+
+body:has(.page-hero) .md-typeset h2 {
+    margin-top: 2.5rem;
+    font-weight: 600;
+}
+
+/* Quotes */
+.md-typeset blockquote {
+    border-left: none;
+    background: var(--md-accent-fg-color--transparent);
+    border-radius: 0.4rem;
+    padding: 0.6rem 1rem;
+    color: var(--md-default-fg-color);
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+    border-radius: 0.4rem;
+    overflow: hidden;
+    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.08);
+}
+
+/* Tables (presentations of the rencontre pages): larger text, names in bold */
+.md-typeset table:not([class]) {
+    font-size: 0.95rem;
+}
+
+.md-typeset table:not([class]) td:first-child {
+    font-weight: 600;
+}
+
+/* Header row: blue in the dark theme, olive (dark text) in the light theme */
+.md-typeset table:not([class]) th {
+    background: var(--mpl-blue);
+    color: #fff;
+}
+
+[data-md-color-scheme="default"] .md-typeset table:not([class]) th {
+    background: var(--mpl-olive);
+    color: #222222;
+}
+
+/* Numbered cards (hooks/list_cards.py) */
+.md-typeset .grid.cards.numbered>ul {
+    counter-reset: card;
+}
+
+.md-typeset .grid.cards.numbered>ul>li {
+    counter-increment: card;
+    position: relative;
+    padding-top: 2.8rem;
+}
+
+.md-typeset .grid.cards.numbered>ul>li::before {
+    content: counter(card, decimal-leading-zero);
+    position: absolute;
+    top: 0.6rem;
+    left: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--mpl-blue);
+    opacity: 0.8;
+}
+
+/* Wider side margins on tablet and desktop (phones keep the default) */
+@media screen and (min-width: 60em) {
+
+    .md-content__inner,
+    .page-hero__inner {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+@media screen and (min-width: 76.25em) {
+
+    .md-content__inner,
+    .page-hero__inner {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+}
+
+/* Never nest the page's table of contents in the navigation sidebar
+   (Material does it on medium screens and phones when the TOC is hidden) */
+.md-nav--primary .md-nav__link[for="__toc"],
+.md-nav--primary .md-nav__link[for="__toc"]~.md-nav {
+    display: none !important;
+}
+
+.md-nav--primary .md-nav__link[for="__toc"]+.md-nav__link {
+    display: flex !important;
+}
+
+/* Collapsed navigation (mobile drawer): title bar like the header */
+.md-nav--primary .md-nav__title[for="__drawer"] {
+    background-color: var(--nuts-bar-background);
+    color: var(--nuts-bar-text);
+}
+
+/* Timeline (hooks/list_cards.py, `timeline: true`): Workshops page */
+.md-typeset .timeline>ul {
+    list-style: none;
+    margin: 2.5rem 0 0 0.6rem;
+    padding: 0 0 0 2rem;
+    border-left: 0.06rem solid var(--mpl-pink);
+}
+
+.md-typeset .timeline>ul>li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 15rem;
+    column-gap: 2rem;
+    align-items: start;
+    margin: 0 0 3rem;
+}
+
+/* A small + on the line */
+.md-typeset .timeline>ul>li::before {
+    content: "+";
+    position: absolute;
+    left: calc(-2rem - 0.35rem - 0.03rem);
+    top: -0.05rem;
+    width: 0.7rem;
+    text-align: center;
+    color: var(--mpl-pink);
+    font-family: var(--md-code-font-family);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    background: var(--md-default-bg-color);  /* hides the line behind the + */
+}
+
+/* A square for the rencontres plénières (and the kickoff), a + for the
+   journées thématiques and the formations */
+.md-typeset .timeline>ul>li:has(> p a[href*="workshop-"])::before,
+.md-typeset .timeline>ul>li:has(> p a[href*="kickoff-"])::before {
+    content: "■";
+    font-size: 0.8rem;
+    line-height: 1.9;  /* keeps the smaller square level with the + */
+}
+
+.md-typeset .timeline>ul>li>p {
+    grid-column: 1;
+    margin: 0 0 0.3rem;
+}
+
+/* Year, place and dates */
+/* Place and dates in a softer color (not with opacity, which would also
+   fade the year) */
+.md-typeset .timeline>ul>li>p:first-child {
+    font-size: 0.88rem;
+    color: var(--md-default-fg-color--light);
+}
+
+/* Year: the same pink as the titles */
+.md-typeset .timeline code {
+    background: none;
+    color: var(--md-typeset-a-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0;
+    margin-right: 0.3rem;
+}
+
+.md-typeset .timeline>ul>li>p:has(> strong > a) {
+    font-size: 1.05rem;
+}
+
+/* Photo on the right */
+.md-typeset .timeline>ul>li>p:has(> img:only-child) {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    margin: 0;
+}
+
+.md-typeset .timeline>ul>li img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 0.3rem;
+}
+
+@media screen and (max-width: 44.9375em) {
+    .md-typeset .timeline>ul>li {
+        grid-template-columns: 1fr;
+    }
+
+    .md-typeset .timeline>ul>li>p:has(> img:only-child) {
+        grid-column: 1;
+        grid-row: auto;
+        margin-top: 0.6rem;
+    }
+}
+/* Photo at the top of a page (right under its title): full width, e.g. the
+   pages of the rencontres */
+.md-typeset h1 + p > img:only-child {
+    display: block;
+    width: 100%;
+    max-height: 32rem;
+    object-fit: cover;
+    border-radius: 0.4rem;
+}
+
+/* Logo (overrides/partials/logo.html): darker shades in the light theme */
+.md-header__button.md-logo img {
+    height: 1.6rem;
+}
+
+/* Material shows logo images with `display: block` (header, mobile menu):
+   hide the variant of the other theme with priority */
+img.nuts-logo--light,
+[data-md-color-scheme="default"] img.nuts-logo--default {
+    display: none !important;
+}
+
+[data-md-color-scheme="default"] img.nuts-logo--light {
+    display: block !important;
+}

@@ -1,0 +1,11 @@
+[project]
+name = "nuts-illustrations"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "cartopy>=0.26.0",
+    "global-land-mask>=1.0.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.1",
+    "scipy>=1.17.1",
+]

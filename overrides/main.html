@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{#- Navigation tabs live in the header (overrides/partials/header.html) -#}
+{% block tabs %}{% endblock %}
+
+{#- Title banner on every page but the home page (which has its own hero),
+    in the same colors, with a small globe video on the right.
+    Optional front matter: `description`, `abstract`. -#}
+{% block hero %}
+{% if page and not page.is_homepage %}
+<section class="page-hero">
+    <div class="page-hero__inner md-grid">
+        <div class="page-hero__text">
+            <h1>{{ page.title }}</h1>
+            {% if page.meta.description %}<p>{{ page.meta.description }}</p>{% endif %}
+            {% if page.meta.abstract %}<p class="page-hero__abstract">{{ page.meta.abstract }}</p>{% endif %}
+        </div>
+        {#- Video per page or section (extra.banner_videos in mkdocs.yml),
+            else one of the home page videos at random (javascripts/alpha_videos.js) -#}
+        {% set ns = namespace(video=none) %}
+        {% for prefix, name in (config.extra.banner_videos or {}).items() %}
+            {% if ns.video is none and page.file.src_uri.startswith(prefix) %}{% set ns.video = name %}{% endif %}
+        {% endfor %}
+        <video class="page-hero__video alpha-video" autoplay muted loop playsinline
+            data-base="{{ 'videos/' | url }}"
+            {%- if ns.video %} data-name="{{ ns.video }}"{% else %} data-random{% endif %}></video>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

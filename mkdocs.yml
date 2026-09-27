@@ -1,0 +1,100 @@
+site_name: Réseau thématique NuTS
+site_description: Le réseau thématique de l'INSU consacré au Numérique pour la Terre Solide
+site_author: NuTS Network
+site_url: https://leonard-seydoux.github.io/nuts-website/
+
+theme:
+  name: material
+  logo: images/logo/logo_icon.svg  # illustrations/logo.py
+  favicon: images/logo/favicon.png  # the hazelnut (illustrations/logo.py)
+  language: fr
+  custom_dir: overrides
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+
+nav:
+  - Accueil: index.md
+  - À propos: apropos.md
+  - Rencontres:
+      - workshops/index.md
+      - workshops/workshop-2027.md
+      - workshops/gaia-2027.md
+      - workshops/workshop-2026.md
+      - workshops/ia-ts-2025.md
+      - workshops/workshop-2025.md
+      - workshops/specfem-2025.md
+      - workshops/workshop-2024.md
+      - workshops/workshop-2023.md
+      - workshops/kickoff-2022.md
+  - Blog:
+      - blog/index.md
+  - Contact: contact.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      toc_depth: 2
+
+hooks:
+  - hooks/figure_sections.py
+  - hooks/list_cards.py
+  - hooks/sidebars.py
+  - hooks/alpha_videos.py
+
+plugins:
+  - search
+  - blog:
+      blog_toc: true
+      post_url_format: "{slug}"
+      post_date_format: long
+      archive: false
+      categories: false
+      authors: false
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/alpha_videos.js
+
+copyright: Copyright &copy; 2026 NuTS. Tous droits réservés.
+
+extra:
+  # Video of the title banner, per page or section (path prefix in docs/);
+  # pages not listed show one of the home page videos at random
+  banner_videos:
+    apropos.md: globe_maillage
+    workshops/: globe_seismes
+    contact.md: globe_satellites
