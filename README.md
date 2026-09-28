@@ -1,72 +1,67 @@
-# NuTS Website
+# Site web de NuTS
 
-This repository contains the MkDocs-based website for **NuTS** (Numérique pour la Terre Solide), the INSU thematic network dedicated to numerical methods in solid Earth sciences.
+Site du réseau thématique **NuTS** (*Numérique en Terre Solide*) de l'INSU, construit avec [MkDocs](https://www.mkdocs.org/) et le thème [Material](https://squidfunk.github.io/mkdocs-material/).
 
-## About NuTS
+Version temporaire en ligne : <https://leonard-seydoux.github.io/nuts-website/>
 
-Le réseau thématique (RT) *Numérique en Terre Solide* (NuTS) vise à structurer la communauté des développeurs et utilisateurs du numérique en Terre Solide (TS) avec pour objectifs de la rendre plus visible, plus efficace et mieux informée.
+## Développement
 
-## Development
-
-This website is built using [MkDocs](https://www.mkdocs.org/) with the [Material theme](https://squidfunk.github.io/mkdocs-material/).
-
-### Prerequisites
-
-- Python 3.11+
-- [UV](https://docs.astral.sh/uv/) package manager
-
-### Installation
-
-Install dependencies using UV:
+Prérequis : Python 3.11+ et [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync
+uv sync                  # installe les dépendances
+uv run mkdocs serve --watch overrides --watch hooks
 ```
 
-### Building the site
+Le site est servi sur <http://127.0.0.1:8000/nuts-website/> (le chemin vient de `site_url` dans `mkdocs.yml`) et se recharge à chaque modification des pages, des gabarits et des hooks.
 
-Build the static site:
+Pour vérifier que tout se construit sans erreur :
 
 ```bash
-uv run mkdocs build
+uv run mkdocs build --strict
 ```
 
-### Serving locally
+## Organisation
 
-Run a local development server:
+| Dossier | Contenu |
+|---------|---------|
+| `docs/` | pages Markdown, images, vidéos, CSS (`stylesheets/extra.css`) et JS |
+| `docs/workshops/` | une page par rencontre, et la frise des rencontres (`index.md`) |
+| `docs/blog/posts/` | articles du blog (synthèses des groupes de discussion…) |
+| `overrides/` | gabarits Material : page d'accueil et son hero (`home.html`), bandeau des pages (`main.html`), en-tête, logo, pied de page |
+| `hooks/` | transformations des pages : cartes et frise (`list_cards.py`), sections texte et image (`figure_sections.py`), vidéos transparentes (`alpha_videos.py`), barres latérales masquées (`sidebars.py`) |
+| `illustrations/` | scripts matplotlib des globes animés et du logo (projet uv séparé) |
+
+## Ajouter du contenu
+
+**Une rencontre.** Créer `docs/workshops/<nom>.md` (en-tête `description:` pour le bandeau), l'ajouter à `nav` dans `mkdocs.yml` et à la frise de `docs/workshops/index.md`. Dans la frise, les pages `workshop-*` et `kickoff-*` ont un carré (rencontres plénières), les autres un `+`.
+
+**Un article de blog.** Créer `docs/blog/posts/<nom>.md` avec `date:` et `slug:` dans l'en-tête, et `<!-- more -->` après le chapeau. Le relier depuis la page de la rencontre concernée si besoin.
+
+**Les boutons d'annonce du hero** (prochaines rencontres) sont écrits en dur dans `overrides/home.html` : à mettre à jour une fois les rencontres passées.
+
+## Illustrations
+
+Les globes sont des vidéos transparentes rendues en ASCII par matplotlib, dans les couleurs `tab10`.
 
 ```bash
-uv run mkdocs serve
+cd illustrations
+uv run globe_seismes.py   # ou globe_axes.py, globe_maillage.py, globe_satellites.py, globe_magnetique.py
+uv run logo.py
 ```
 
-The site will be available at `http://127.0.0.1:8000/`
+Les rendus arrivent dans `illustrations/outputs/` (ignoré par git) ; copier ensuite les `.webm`, `.mov` et `.png` dans `docs/videos/`, et le logo dans `docs/images/logo/`.
 
-### Deploying
+Chaque vidéo existe en deux formats, car aucun ne garde la transparence partout : `.webm` (VP9) pour Chrome et Firefox, `.mov` (HEVC) pour Safari. `docs/javascripts/alpha_videos.js` choisit le bon selon le navigateur.
 
-To deploy to GitHub Pages:
+## Déploiement
 
-```bash
-uv run mkdocs gh-deploy
-```
+Chaque push sur `main` reconstruit le site et le publie sur GitHub Pages (`.github/workflows/deploy.yml`). Le workflow peut aussi être relancé à la main depuis l'onglet *Actions*.
 
-## Content Structure
+**Passage sur un serveur dédié.** Mettre à jour `site_url` dans `mkdocs.yml`, construire avec `uv run mkdocs build --strict`, et copier le contenu de `site/` à la racine du serveur web. Désactiver ensuite GitHub Pages (ou supprimer le dépôt) pour ne pas laisser deux copies en ligne.
 
-- `docs/` - Markdown source files for the website
-  - `index.md` - Homepage
-  - `context.md` - Context and background
-  - `objectifs.md` - Objectives
-  - `actions.md` - Actions and resources overview
-  - `organisation.md` - Organization and participants
-  - `kickoff.md` - Kickoff meeting (2022)
-  - `workshop1.md` - Workshop 1 (2023) - Machine Learning
-  - `workshop2.md` - Workshop 2 (2024) - Inverse Problems
-  - `workshop3.md` - Workshop 3 (2025) - Grenoble
-  - `images/` - Image assets
-- `mkdocs.yml` - MkDocs configuration file
-- `site/` - Generated static site (excluded from git)
+**Nom de domaine sur GitHub Pages.** Ajouter un fichier `docs/CNAME` contenant le domaine (par exemple `rt-nuts.fr`), faire pointer le DNS vers GitHub Pages, renseigner le domaine dans les réglages *Pages* du dépôt et mettre `site_url` à jour.
 
-## License
+## Licence
 
 Copyright © 2022-2026 NuTS. Tous droits réservés.
-
-Original content from [nuts.univ-nantes.io](https://nuts.univ-nantes.io/)

@@ -65,9 +65,9 @@
     /* navigation tabs */
     --md-primary-fg-color--dark: var(--mpl-orange);
     --md-default-bg-color: color-mix(in srgb, var(--mpl-olive) 14%, white);  /* page, lighter than the hero */
-    --nuts-bar-background: var(--mpl-olive);  /* header and mobile menu title */
+    --nuts-bar-background: var(--nuts-hero-background);  /* header and mobile menu title, like the hero and banners */
     --nuts-title-color: var(--mpl-olive);  /* section titles of the inner pages */
-    --nuts-bar-text: #222222;  /* white is hard to read on olive */
+    --nuts-bar-text: var(--nuts-hero-text);
     --md-default-fg-color: #222222;
 }
 
@@ -89,9 +89,9 @@
     --md-accent-fg-color: var(--mpl-blue-light);
     --md-accent-fg-color--transparent: color-mix(in srgb, var(--mpl-blue-light) 10%, transparent);
     --md-default-bg-color: color-mix(in srgb, var(--mpl-blue) 16%, #1c1c1c);  /* page, darker than the hero */
-    --nuts-bar-background: var(--mpl-blue);  /* header and mobile menu title */
+    --nuts-bar-background: var(--nuts-hero-background);  /* header and mobile menu title, like the hero and banners */
     --nuts-title-color: var(--mpl-blue);  /* section titles of the inner pages */
-    --nuts-bar-text: #ffffff;
+    --nuts-bar-text: var(--nuts-hero-text);
     --md-default-fg-color: #ffffff;
     --md-typeset-a-color: var(--mpl-pink);
 }
