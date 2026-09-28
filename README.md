@@ -6,10 +6,10 @@ Version temporaire en ligne : <https://leonard-seydoux.github.io/nuts-website/>
 
 ## Développement
 
-Prérequis : Python 3.11+ et [uv](https://docs.astral.sh/uv/).
+Prérequis : Python 3.11+ et [uv](https://docs.astral.sh/uv/). Un seul environnement, `.venv/` à la racine, défini par `pyproject.toml` et `uv.lock`, sert au site comme aux illustrations : `uv run` le trouve depuis n'importe quel sous-dossier.
 
 ```bash
-uv sync                  # installe les dépendances
+uv sync                  # installe les dépendances (site et illustrations)
 uv run mkdocs serve --watch overrides --watch hooks
 ```
 
@@ -30,7 +30,7 @@ uv run mkdocs build --strict
 | `docs/blog/posts/` | articles du blog (synthèses des groupes de discussion…) |
 | `overrides/` | gabarits Material : page d'accueil et son hero (`home.html`), bandeau des pages (`main.html`), en-tête, logo, pied de page |
 | `hooks/` | transformations des pages : cartes et frise (`list_cards.py`), sections texte et image (`figure_sections.py`), vidéos transparentes (`alpha_videos.py`), barres latérales masquées (`sidebars.py`) |
-| `illustrations/` | scripts matplotlib des globes animés et du logo (projet uv séparé) |
+| `illustrations/` | scripts matplotlib des globes animés et du logo |
 
 ## Ajouter du contenu
 
