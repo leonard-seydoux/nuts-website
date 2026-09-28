@@ -47,12 +47,12 @@ Les globes sont des vidéos transparentes rendues en ASCII par matplotlib, dans 
 `ascii_earth.py` contient tout ce qui est commun : palette, cadrage, Terre en caractères qui tourne (`HeroGlobe`), lignes et glyphes, rendu vidéo et ligne de commande. Chaque `globe_*.py` hérite de `HeroGlobe` et n'ajoute que ce qu'il dessine autour de la Terre ; `seismes.py` fournit les catalogues de séismes.
 
 ```bash
-cd illustrations
-uv run globe_seismes.py   # ou globe_axes.py, globe_maillage.py, globe_satellites.py, globe_magnetique.py
-uv run logo.py
+illustrations/generate_illustrations.sh              # tous les globes et le logo
+illustrations/generate_illustrations.sh axes logo    # seulement certains
+illustrations/generate_illustrations.sh --preview    # une image par globe, sans copie
 ```
 
-Les rendus arrivent dans `illustrations/outputs/` (ignoré par git) ; copier ensuite les `.webm`, `.mov` et `.png` dans `docs/videos/`, et le logo dans `docs/images/logo/`.
+Le script rend chaque illustration dans `illustrations/outputs/` (ignoré par git), puis copie les vidéos dans `docs/videos/` et le logo dans `docs/images/logo/` (y compris le favicon). Chaque globe se lance aussi seul : `cd illustrations && uv run globe_seismes.py [--preview]`.
 
 Chaque vidéo existe en deux formats, car aucun ne garde la transparence partout : `.webm` (VP9) pour Chrome et Firefox, `.mov` (HEVC) pour Safari. `docs/javascripts/alpha_videos.js` choisit le bon selon le navigateur.
 

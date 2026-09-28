@@ -38,8 +38,11 @@ ADVANCE = 1233 / 2048  # character width of DejaVu Sans Mono, in em
 
 # ffmpeg executable: $FFMPEG, else Homebrew's (recent enough for HEVC with
 # alpha), else the first one on the PATH
-FFMPEG = (os.environ.get("FFMPEG") or shutil.which("ffmpeg", path="/opt/homebrew/bin")
-          or "ffmpeg")
+FFMPEG = (
+    os.environ.get("FFMPEG")
+    or shutil.which("ffmpeg", path="/opt/homebrew/bin")
+    or "ffmpeg"
+)
 
 OUTPUT = Path(__file__).parent / "outputs"
 
@@ -53,12 +56,16 @@ EXTENT = 2.25  # half-width of the view, in Earth radii: room around the Earth
 FONTSIZE = 1.45 * 23 * 1.05 / EXTENT  # surface characters: large and bold
 WEIGHT = "bold"
 MARK_FONTSIZE = 23 * 1.05 / EXTENT  # epicenters and satellites
-LINE_WIDTH = 1.4 * 150 / DPI  # rings, orbits, meshes, axes, field lines (points)
+LINE_WIDTH = (
+    1.4 * 150 / DPI
+)  # rings, orbits, meshes, axes, field lines (points)
 BACK_ALPHA = 0.35  # opacity of the lines passing behind the Earth
 N_POINTS = 900  # surface points over the whole sphere
 LAT0 = -4  # latitude facing the viewer: seen from just below the equator
 LON_START = 150  # longitude facing the viewer at t = 0 (Pacific)
-VIEW_ROLL = 6  # the picture is turned so that the North Pole leans left (degrees)
+VIEW_ROLL = (
+    6  # the picture is turned so that the North Pole leans left (degrees)
+)
 DURATION = 30  # seconds, one full turn of the Earth: the videos loop
 FPS = 24
 
@@ -67,9 +74,17 @@ LAND_CHARS, OCEAN_CHARS = "#", "≈"
 # Glyph styles: (color, alpha). Ocean and land have four shades, from day to
 # night; then the accent color, for the marks drawn around the Earth
 STYLES = [
-    (OCEAN_COLOR, 0.95), (OCEAN_COLOR, 0.80), (OCEAN_COLOR, 0.60), (OCEAN_COLOR, 0.35),
-    (LAND_COLOR, 1.00), (LAND_COLOR, 0.90), (LAND_COLOR, 0.70), (LAND_COLOR, 0.40),
-    (ACCENT, 1.00), (ACCENT, 0.60), (ACCENT, 0.55),
+    (OCEAN_COLOR, 0.95),
+    (OCEAN_COLOR, 0.80),
+    (OCEAN_COLOR, 0.60),
+    (OCEAN_COLOR, 0.35),
+    (LAND_COLOR, 1.00),
+    (LAND_COLOR, 0.90),
+    (LAND_COLOR, 0.70),
+    (LAND_COLOR, 0.40),
+    (ACCENT, 1.00),
+    (ACCENT, 0.60),
+    (ACCENT, 0.55),
 ]
 OCEAN, LAND, MARK, MARK_FADING, MARK_PAST = 0, 4, 8, 9, 10
 
@@ -81,18 +96,23 @@ SUN = np.array([-0.75, 0.25, 0.6]) / np.linalg.norm([-0.75, 0.25, 0.6])
 def shade(x, y, mu):
     """Shade index (0 lit, 3 night) of visible points (x, y, mu) of the sphere."""
     light = SUN[0] * x + SUN[1] * y + SUN[2] * mu
-    return np.where(light > 0.55, 0, np.where(light > 0.2, 1, np.where(light > -0.05, 2, 3)))
+    return np.where(
+        light > 0.55,
+        0,
+        np.where(light > 0.2, 1, np.where(light > -0.05, 2, 3)),
+    )
 
 
 # ---------------------------------------------------------------------------
 # Geometry
 # ---------------------------------------------------------------------------
 
+
 def fibonacci_sphere(n):
     """n points spread uniformly on the sphere, as (lat, lon) in degrees."""
     k = np.arange(n) + 0.5
     lat = np.degrees(np.arcsin(1 - 2 * k / n))
-    lon = (np.degrees(np.pi * (1 + 5 ** 0.5) * k) + 180) % 360 - 180
+    lon = (np.degrees(np.pi * (1 + 5**0.5) * k) + 180) % 360 - 180
     return lat, lon
 
 
@@ -102,9 +122,13 @@ def orthographic_xy(lat, lon, lon0, lat0=LAT0, roll=VIEW_ROLL):
     by `roll` degrees."""
     phi, lam = np.radians(lat), np.radians(lon)
     phi0, lam0 = np.radians(lat0), np.radians(lon0)
-    mu = np.sin(phi0) * np.sin(phi) + np.cos(phi0) * np.cos(phi) * np.cos(lam - lam0)
+    mu = np.sin(phi0) * np.sin(phi) + np.cos(phi0) * np.cos(phi) * np.cos(
+        lam - lam0
+    )
     x = np.cos(phi) * np.sin(lam - lam0)
-    y = np.cos(phi0) * np.sin(phi) - np.sin(phi0) * np.cos(phi) * np.cos(lam - lam0)
+    y = np.cos(phi0) * np.sin(phi) - np.sin(phi0) * np.cos(phi) * np.cos(
+        lam - lam0
+    )
     c, s = np.cos(np.radians(roll)), np.sin(np.radians(roll))
     return c * x - s * y, s * x + c * y, mu
 
@@ -155,14 +179,24 @@ class DepthLines:
     edge of the picture.
     """
 
-    def __init__(self, ax, color=ACCENT, linewidth=LINE_WIDTH, back=BACK_ALPHA,
-                 dash=None, limb=None, outer=None, zorders=(1, 3)):
+    def __init__(
+        self,
+        ax,
+        color=ACCENT,
+        linewidth=LINE_WIDTH,
+        back=BACK_ALPHA,
+        dash=None,
+        limb=None,
+        outer=None,
+        zorders=(1, 3),
+    ):
         self.rgb = matplotlib.colors.to_rgb(color)
         self.back, self.dash, self.limb, self.outer = back, dash, limb, outer
         self.layers = []
         for zorder in zorders:
-            collection = LineCollection([], linewidths=linewidth, capstyle="round",
-                                        zorder=zorder)
+            collection = LineCollection(
+                [], linewidths=linewidth, capstyle="round", zorder=zorder
+            )
             ax.add_collection(collection, autolim=False)
             self.layers.append(collection)
 
@@ -177,21 +211,31 @@ class DepthLines:
                 middle = np.nan_to_num((length[:-1] + length[1:]) / 2)
                 ok &= ((middle - offset) // self.dash) % 2 == 0
             index = np.flatnonzero(ok)
-            segments.append(np.stack([np.column_stack([x[index], y[index]]),
-                                      np.column_stack([x[index + 1], y[index + 1]])], axis=1))
+            segments.append(
+                np.stack(
+                    [
+                        np.column_stack([x[index], y[index]]),
+                        np.column_stack([x[index + 1], y[index + 1]]),
+                    ],
+                    axis=1,
+                )
+            )
             depth.append((mu[index] + mu[index + 1]) / 2)
         segments, depth = np.concatenate(segments), np.concatenate(depth)
         alpha = depth_alpha(depth, self.back)
         rho = np.hypot(*segments.mean(axis=1).T)
         if self.limb:
             # Behind the Earth: fade out towards its edge, hidden over its disk
-            factor = np.where(depth < 0, np.clip((rho - 1) / self.limb, 0, 1), 1.0)
+            factor = np.where(
+                depth < 0, np.clip((rho - 1) / self.limb, 0, 1), 1.0
+            )
             segments, depth, alpha = fade(segments, depth, alpha, factor)
             rho = np.hypot(*segments.mean(axis=1).T)
         if self.outer:
             radius, width = self.outer
-            segments, depth, alpha = fade(segments, depth, alpha,
-                                          np.clip((radius - rho) / width, 0, 1))
+            segments, depth, alpha = fade(
+                segments, depth, alpha, np.clip((radius - rho) / width, 0, 1)
+            )
         colors = np.column_stack([np.tile(self.rgb, (len(depth), 1)), alpha])
         for layer, keep in zip(self.layers, (depth < 0, depth >= 0)):
             layer.set_segments(segments[keep])
@@ -202,12 +246,18 @@ class DepthLines:
 # Glyphs
 # ---------------------------------------------------------------------------
 
+
 def glyph_path(char, fontsize, weight="normal"):
     """Outline of a character, in points, centered on its cell."""
-    path = TextPath((0, 0), char, size=fontsize,
-                    prop=FontProperties(family=FONT, weight=weight))
-    return path.transformed(Affine2D().translate(-ADVANCE * fontsize / 2,
-                                                 -0.36 * fontsize))
+    path = TextPath(
+        (0, 0),
+        char,
+        size=fontsize,
+        prop=FontProperties(family=FONT, weight=weight),
+    )
+    return path.transformed(
+        Affine2D().translate(-ADVANCE * fontsize / 2, -0.36 * fontsize)
+    )
 
 
 class GlyphLayer:
@@ -215,7 +265,12 @@ class GlyphLayer:
     in one of the STYLES (color, alpha), `fontsize` points high."""
 
     def __init__(self, ax, fontsize, zorder=2, weight="normal", styles=STYLES):
-        self.ax, self.styles, self.fontsize, self.zorder = ax, styles, fontsize, zorder
+        self.ax, self.styles, self.fontsize, self.zorder = (
+            ax,
+            styles,
+            fontsize,
+            zorder,
+        )
         self.weight = weight
         self.collections = {}
         self.scale = Affine2D().scale(ax.figure.dpi / 72)
@@ -225,9 +280,14 @@ class GlyphLayer:
         if key not in self.collections:
             color, alpha = self.styles[style]
             collection = PathCollection(
-                [glyph_path(char, self.fontsize, self.weight)], offsets=np.empty((0, 2)),
+                [glyph_path(char, self.fontsize, self.weight)],
+                offsets=np.empty((0, 2)),
                 offset_transform=self.ax.transData,
-                facecolors=color, edgecolors="none", alpha=alpha, zorder=self.zorder)
+                facecolors=color,
+                edgecolors="none",
+                alpha=alpha,
+                zorder=self.zorder,
+            )
             collection.set_transform(self.scale)
             self.ax.add_collection(collection, autolim=False)
             self.collections[key] = collection
@@ -236,8 +296,12 @@ class GlyphLayer:
     def draw(self, x, y, chars, styles):
         """Show glyph chars[i] with style styles[i] at (x[i], y[i])."""
         xy = np.column_stack([np.ravel(x), np.ravel(y)])
-        chars, styles = np.ravel(chars).astype(str), np.ravel(styles).astype(int)
-        codes = np.array([ord(c) for c in chars], dtype=np.int64) * 1000 + styles
+        chars, styles = np.ravel(chars).astype(str), np.ravel(styles).astype(
+            int
+        )
+        codes = (
+            np.array([ord(c) for c in chars], dtype=np.int64) * 1000 + styles
+        )
         order = np.argsort(codes, kind="stable")
         codes, xy = codes[order], xy[order]
         bounds = np.flatnonzero(np.diff(codes)) + 1
@@ -257,6 +321,7 @@ class GlyphLayer:
 # The turning Earth, base of every video
 # ---------------------------------------------------------------------------
 
+
 class HeroGlobe:
     """Transparent square figure with the Earth, made of characters, turning
     once during the video. Subclasses draw around it: they extend frame(t),
@@ -269,8 +334,11 @@ class HeroGlobe:
         rng = np.random.default_rng(seed)
         self.lat, self.lon = fibonacci_sphere(N_POINTS)
         self.land = globe.is_land(self.lat, self.lon)
-        self.chars = np.where(self.land, rng.choice(list(LAND_CHARS), N_POINTS),
-                              rng.choice(list(OCEAN_CHARS), N_POINTS))
+        self.chars = np.where(
+            self.land,
+            rng.choice(list(LAND_CHARS), N_POINTS),
+            rng.choice(list(OCEAN_CHARS), N_POINTS),
+        )
 
         self.fig = plt.figure(figsize=(SIZE, SIZE), dpi=DPI)
         self.fig.patch.set_alpha(0)  # transparent: the website sets the color
@@ -295,7 +363,9 @@ class HeroGlobe:
         options can be given with `parser`; its arguments go to the class."""
         parser = parser or argparse.ArgumentParser()
         parser.description = (cls.__doc__ or "").splitlines()[0]
-        parser.add_argument("--preview", action="store_true", help="render one frame as PNG")
+        parser.add_argument(
+            "--preview", action="store_true", help="render one frame as PNG"
+        )
         args = vars(parser.parse_args())
         preview = args.pop("preview")
         OUTPUT.mkdir(exist_ok=True)
@@ -305,15 +375,26 @@ class HeroGlobe:
             figure.fig.savefig(OUTPUT / f"{cls.name}.png", transparent=True)
             print(f"saved {OUTPUT / cls.name}.png")
         else:
-            render_transparent_video(figure.fig, figure.frame, OUTPUT / cls.name)
+            render_transparent_video(
+                figure.fig, figure.frame, OUTPUT / cls.name
+            )
 
 
 # ---------------------------------------------------------------------------
 # Video
 # ---------------------------------------------------------------------------
 
-def render_transparent_video(fig, draw_frame, stem, duration=DURATION, fps=FPS,
-                             matte=OCEAN_COLOR, vp9_crf=52, hevc_quality=35):
+
+def render_transparent_video(
+    fig,
+    draw_frame,
+    stem,
+    duration=DURATION,
+    fps=FPS,
+    matte=OCEAN_COLOR,
+    vp9_crf=52,
+    hevc_quality=35,
+):
     """Render draw_frame(t) into two videos with an alpha channel, for the web.
 
     The figure background must be transparent. Fully transparent pixels get
@@ -325,27 +406,70 @@ def render_transparent_video(fig, draw_frame, stem, duration=DURATION, fps=FPS,
     - <stem>.png: the first frame, as a transparent poster.
     """
     stem = Path(stem)
-    matte_rgb = np.round(255 * np.array(matplotlib.colors.to_rgb(matte))).astype(np.uint8)
+    matte_rgb = np.round(
+        255 * np.array(matplotlib.colors.to_rgb(matte))
+    ).astype(np.uint8)
     fig.canvas.draw()
     width, height = fig.canvas.get_width_height()
     even = "pad=ceil(iw/2)*2:ceil(ih/2)*2:color=0x00000000"
     command = [
-        FFMPEG, "-y", "-loglevel", "error",
-        "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{width}x{height}",
-        "-r", str(fps), "-i", "-",
+        FFMPEG,
+        "-y",
+        "-loglevel",
+        "error",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgba",
+        "-s",
+        f"{width}x{height}",
+        "-r",
+        str(fps),
+        "-i",
+        "-",
         # VP9 with alpha
-        "-vf", even, "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p",
-        "-b:v", "0", "-crf", str(vp9_crf), "-auto-alt-ref", "0",
-        "-row-mt", "1", "-deadline", "good", "-cpu-used", "2",
+        "-vf",
+        even,
+        "-c:v",
+        "libvpx-vp9",
+        "-pix_fmt",
+        "yuva420p",
+        "-b:v",
+        "0",
+        "-crf",
+        str(vp9_crf),
+        "-auto-alt-ref",
+        "0",
+        "-row-mt",
+        "1",
+        "-deadline",
+        "good",
+        "-cpu-used",
+        "2",
         str(stem.with_suffix(".webm")),
         # HEVC with alpha, hardware encoder of macOS (constant quality: it
         # smears badly at a low fixed bitrate). Safari reads its colors as
         # premultiplied by alpha, so premultiply them
-        "-vf", even + ",premultiply=inplace=1",
-        "-c:v", "hevc_videotoolbox", "-pix_fmt", "bgra",
-        "-alpha_quality", "0.4", "-q:v", str(hevc_quality), "-tag:v", "hvc1",
-        "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
-        "-movflags", "+faststart",
+        "-vf",
+        even + ",premultiply=inplace=1",
+        "-c:v",
+        "hevc_videotoolbox",
+        "-pix_fmt",
+        "bgra",
+        "-alpha_quality",
+        "0.4",
+        "-q:v",
+        str(hevc_quality),
+        "-tag:v",
+        "hvc1",
+        "-colorspace",
+        "bt709",
+        "-color_primaries",
+        "bt709",
+        "-color_trc",
+        "bt709",
+        "-movflags",
+        "+faststart",
         str(stem.with_suffix(".mov")),
     ]
     with subprocess.Popen(command, stdin=subprocess.PIPE) as ffmpeg:

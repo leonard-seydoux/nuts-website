@@ -18,6 +18,9 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+# Same SVG for the same logo (no random ids), so that git only sees real changes
+plt.rcParams["svg.hashsalt"] = "nuts"
 from matplotlib.colors import to_hex, to_rgb
 from matplotlib.font_manager import FontProperties
 from matplotlib.patches import PathPatch
@@ -133,7 +136,7 @@ def icon(name, colors):
 
     OUTPUT.mkdir(parents=True, exist_ok=True)
     for ext in ("svg", "png"):
-        fig.savefig(OUTPUT / f"{name}.{ext}", transparent=True)
+        fig.savefig(OUTPUT / f"{name}.{ext}", transparent=True, metadata={"Date": None})
     plt.close(fig)
     print(f"saved {OUTPUT}/{name}.svg/.png")
 
