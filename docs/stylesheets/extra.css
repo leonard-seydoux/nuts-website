@@ -66,7 +66,10 @@
     --md-primary-fg-color--dark: var(--mpl-orange);
     --md-default-bg-color: color-mix(in srgb, var(--mpl-olive) 14%, white);  /* page, lighter than the hero */
     --nuts-bar-background: var(--nuts-hero-background);  /* header and mobile menu title, like the hero and banners */
-    --nuts-title-color: var(--mpl-olive);  /* section titles of the inner pages */
+    /* Headings: section, subsection, subsubsection */
+    --nuts-h2-color: var(--mpl-olive);
+    --nuts-h3-color: var(--mpl-pink);
+    --nuts-h4-color: var(--mpl-cyan);
     --nuts-bar-text: var(--nuts-hero-text);
     --md-default-fg-color: #222222;
 }
@@ -90,7 +93,10 @@
     --md-accent-fg-color--transparent: color-mix(in srgb, var(--mpl-blue-light) 10%, transparent);
     --md-default-bg-color: color-mix(in srgb, var(--mpl-blue) 16%, #1c1c1c);  /* page, darker than the hero */
     --nuts-bar-background: var(--nuts-hero-background);  /* header and mobile menu title, like the hero and banners */
-    --nuts-title-color: var(--mpl-blue);  /* section titles of the inner pages */
+    /* Headings: section, subsection, subsubsection */
+    --nuts-h2-color: var(--mpl-cyan);
+    --nuts-h3-color: var(--mpl-pink);
+    --nuts-h4-color: var(--mpl-olive);
     --nuts-bar-text: var(--nuts-hero-text);
     --md-default-fg-color: #ffffff;
     --md-typeset-a-color: var(--mpl-pink);
@@ -211,7 +217,7 @@
     font-weight: 700;
 }
 
-/* Links in pink, red on hover, in both themes. Material's palette sets the
+/* Links in pink, cyan on hover, in both themes. Material's palette sets the
    link color on body[data-md-color-scheme][data-md-color-primary]: a more
    specific selector is needed to override it */
 body[data-md-color-scheme][data-md-color-primary] {
@@ -220,7 +226,7 @@ body[data-md-color-scheme][data-md-color-primary] {
 
 .md-typeset a:focus,
 .md-typeset a:hover {
-    color: var(--mpl-red);
+    color: var(--mpl-cyan);
 }
 
 /* Paragraphs and list items at the same size */
@@ -416,10 +422,18 @@ body:has(.page-hero) .md-content__inner>h1:first-of-type {
     }
 }
 
-/* Section titles: olive in the light theme, blue in the dark one */
-body:has(.page-hero) .md-typeset h2,
-body:has(.page-hero) .md-typeset h3 {
-    color: var(--nuts-title-color);
+/* Headings in the three foreground colors, per theme: sections olive (light)
+   or cyan (dark), subsections pink, subsubsections cyan (light) or olive (dark) */
+.md-typeset h2 {
+    color: var(--nuts-h2-color);
+}
+
+.md-typeset h3 {
+    color: var(--nuts-h3-color);
+}
+
+.md-typeset h4 {
+    color: var(--nuts-h4-color);
 }
 
 body:has(.page-hero) .md-typeset h2 {
@@ -568,22 +582,12 @@ body:has(.page-hero) .md-typeset h2 {
     margin: 0 0 0.3rem;
 }
 
-/* Year, place and dates */
-/* Place and dates in a softer color (not with opacity, which would also
-   fade the year) */
-.md-typeset .timeline>ul>li>p:first-child {
-    font-size: 0.88rem;
-    color: var(--md-default-fg-color--light);
-}
-
-/* Year: the same pink as the titles */
-.md-typeset .timeline code {
-    background: none;
-    color: var(--md-typeset-a-color);
-    font-size: 0.85rem;
+/* Year, place and dates, under the title: a subsubsection heading */
+.md-typeset .timeline>ul>li>h4 {
+    grid-column: 1;
+    margin: 0 0 0.4rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    padding: 0;
-    margin-right: 0.3rem;
 }
 
 .md-typeset .timeline>ul>li>p:has(> strong > a) {
@@ -593,7 +597,7 @@ body:has(.page-hero) .md-typeset h2 {
 /* Photo on the right */
 .md-typeset .timeline>ul>li>p:has(> img:only-child) {
     grid-column: 2;
-    grid-row: 1 / span 4;
+    grid-row: 1 / span 5;
     margin: 0;
 }
 

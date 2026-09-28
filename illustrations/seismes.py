@@ -68,6 +68,31 @@ def save_catalogue(catalogue, path):
             )
 
 
+def select(catalogue, keep):
+    """Subset of a catalogue."""
+    return {key: np.asarray(value)[keep] if key != "date" else
+            [d for d, k in zip(value, keep) if k] for key, value in catalogue.items()}
+
+
+def fake_seismogram(seed, n=400):
+    """A seismogram-like signal along u in [0, 1], peak amplitude 1: noise, a
+    small P arrival, a larger S arrival and a decaying coda."""
+    rng = np.random.default_rng(seed)
+    u = np.linspace(0, 1, n)
+    noise = np.convolve(rng.normal(size=n), np.ones(8) / 8, mode="same") * 0.12
+
+    def arrival(onset, amplitude, frequency, decay):
+        after = np.clip(u - onset, 0, None)
+        envelope = np.where(u > onset, np.exp(-after / decay) * (1 - np.exp(-after / 0.01)), 0)
+        return amplitude * envelope * np.sin(2 * np.pi * frequency * after + rng.uniform(0, 6.3))
+
+    p_onset = rng.uniform(0.08, 0.15)
+    s_onset = p_onset + rng.uniform(0.15, 0.25)
+    signal = (noise + arrival(p_onset, 0.35, rng.uniform(16, 20), 0.06)
+              + arrival(s_onset, 1.0, rng.uniform(10, 13), 0.18))
+    return u, signal / np.abs(signal).max()
+
+
 def lifetime(magnitude):
     """How long an earthquake stays animated, in seconds."""
     return 0.6 + 0.5 * (magnitude - 4.5)

@@ -44,6 +44,8 @@ uv run mkdocs build --strict
 
 Les globes sont des vidéos transparentes rendues en ASCII par matplotlib, dans les couleurs `tab10`.
 
+`ascii_earth.py` contient tout ce qui est commun : palette, cadrage, Terre en caractères qui tourne (`HeroGlobe`), lignes et glyphes, rendu vidéo et ligne de commande. Chaque `globe_*.py` hérite de `HeroGlobe` et n'ajoute que ce qu'il dessine autour de la Terre ; `seismes.py` fournit les catalogues de séismes.
+
 ```bash
 cd illustrations
 uv run globe_seismes.py   # ou globe_axes.py, globe_maillage.py, globe_satellites.py, globe_magnetique.py

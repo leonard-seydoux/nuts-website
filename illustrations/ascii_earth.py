@@ -1,10 +1,16 @@
 """ASCII-art Earth rendered with matplotlib, in the NuTS graphic style.
 
+Everything the globe videos (globe_*.py) share lives here: the palette, the
+framing, the turning Earth made of characters (HeroGlobe), the lines and
+glyphs drawn around it, and the rendering of transparent videos for the web.
+Each globe_*.py only adds what it draws around the Earth.
+
 Characters are drawn as vector glyphs: each (character, style) pair is one
 matplotlib PathCollection whose positions change from frame to frame
 (GlyphLayer). This draws thousands of characters in a few milliseconds.
 """
 
+import argparse
 import os
 import shutil
 import subprocess
@@ -14,6 +20,7 @@ import numpy as np
 import matplotlib
 
 matplotlib.use("Agg")  # off-screen rendering, same pixel sizes on every screen
+import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.collections import LineCollection, PathCollection  # noqa: E402
 from matplotlib.font_manager import FontProperties  # noqa: E402
 from matplotlib.textpath import TextPath  # noqa: E402
@@ -23,26 +30,63 @@ from global_land_mask import globe  # noqa: E402
 # Matplotlib default palette (tab10), shared with the website
 C0, C1, C2, C3, C4 = "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"
 C5, C6, C7, C8, C9 = "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
-ACCENT = C6  # earthquakes, satellites and meshes: one color for all illustrations
-
+OCEAN_COLOR, LAND_COLOR = C9, C8
+ACCENT = C6  # earthquakes, satellites, meshes, axes, field lines
 
 FONT = "DejaVu Sans Mono"
 ADVANCE = 1233 / 2048  # character width of DejaVu Sans Mono, in em
-
 
 # ffmpeg executable: $FFMPEG, else Homebrew's (recent enough for HEVC with
 # alpha), else the first one on the PATH
 FFMPEG = (os.environ.get("FFMPEG") or shutil.which("ffmpeg", path="/opt/homebrew/bin")
           or "ffmpeg")
 
+OUTPUT = Path(__file__).parent / "outputs"
+
 
 # ---------------------------------------------------------------------------
-# Geography
+# Framing, shared by all the videos: same Earth, same size, same view
 # ---------------------------------------------------------------------------
 
-def is_land(lat, lon):
-    return globe.is_land(lat, lon)
+SIZE, DPI = 8.4, 105  # square figure, in inches: about 880 x 880 px
+EXTENT = 2.25  # half-width of the view, in Earth radii: room around the Earth
+FONTSIZE = 1.45 * 23 * 1.05 / EXTENT  # surface characters: large and bold
+WEIGHT = "bold"
+MARK_FONTSIZE = 23 * 1.05 / EXTENT  # epicenters and satellites
+LINE_WIDTH = 1.4 * 150 / DPI  # rings, orbits, meshes, axes, field lines (points)
+BACK_ALPHA = 0.35  # opacity of the lines passing behind the Earth
+N_POINTS = 900  # surface points over the whole sphere
+LAT0 = -4  # latitude facing the viewer: seen from just below the equator
+LON_START = 150  # longitude facing the viewer at t = 0 (Pacific)
+VIEW_ROLL = 6  # the picture is turned so that the North Pole leans left (degrees)
+DURATION = 30  # seconds, one full turn of the Earth: the videos loop
+FPS = 24
 
+LAND_CHARS, OCEAN_CHARS = "#", "≈"
+
+# Glyph styles: (color, alpha). Ocean and land have four shades, from day to
+# night; then the accent color, for the marks drawn around the Earth
+STYLES = [
+    (OCEAN_COLOR, 0.95), (OCEAN_COLOR, 0.80), (OCEAN_COLOR, 0.60), (OCEAN_COLOR, 0.35),
+    (LAND_COLOR, 1.00), (LAND_COLOR, 0.90), (LAND_COLOR, 0.70), (LAND_COLOR, 0.40),
+    (ACCENT, 1.00), (ACCENT, 0.60), (ACCENT, 0.55),
+]
+OCEAN, LAND, MARK, MARK_FADING, MARK_PAST = 0, 4, 8, 9, 10
+
+# Direction of the (fake) Sun in the viewer's frame (x right, y up, z towards
+# the viewer): from the front left, so the night side is on the right
+SUN = np.array([-0.75, 0.25, 0.6]) / np.linalg.norm([-0.75, 0.25, 0.6])
+
+
+def shade(x, y, mu):
+    """Shade index (0 lit, 3 night) of visible points (x, y, mu) of the sphere."""
+    light = SUN[0] * x + SUN[1] * y + SUN[2] * mu
+    return np.where(light > 0.55, 0, np.where(light > 0.2, 1, np.where(light > -0.05, 2, 3)))
+
+
+# ---------------------------------------------------------------------------
+# Geometry
+# ---------------------------------------------------------------------------
 
 def fibonacci_sphere(n):
     """n points spread uniformly on the sphere, as (lat, lon) in degrees."""
@@ -52,12 +96,7 @@ def fibonacci_sphere(n):
     return lat, lon
 
 
-# The picture is turned by this angle, so that the North Pole leans to the
-# left as if the globe were seen slightly from the side (degrees)
-VIEW_ROLL = 6
-
-
-def orthographic_xy(lat, lon, lon0, lat0, roll=VIEW_ROLL):
+def orthographic_xy(lat, lon, lon0, lat0=LAT0, roll=VIEW_ROLL):
     """Orthographic projection on the unit disk: x, y and mu (cosine of the
     angle to the viewer, > 0 on the visible side). The picture is then turned
     by `roll` degrees."""
@@ -70,7 +109,26 @@ def orthographic_xy(lat, lon, lon0, lat0, roll=VIEW_ROLL):
     return c * x - s * y, s * x + c * y, mu
 
 
-def depth_alpha(mu, back=0.3, width=0.7):
+def project_xyz(xyz, lon0, lat0=LAT0):
+    """Orthographic projection of 3D points (Earth frame, in Earth radii):
+    x, y and depth (> 0 towards the viewer)."""
+    r = np.linalg.norm(xyz, axis=-1)
+    lat = np.degrees(np.arcsin(xyz[..., 2] / r))
+    lon = np.degrees(np.arctan2(xyz[..., 1], xyz[..., 0]))
+    x, y, mu = orthographic_xy(lat, lon, lon0, lat0)
+    return r * x, r * y, r * mu
+
+
+def project_line(xyz, lon0, hide=True):
+    """Polyline for DepthLines: x, y and mu (depth over distance to the
+    centre). With `hide`, x is NaN where the Earth hides the line."""
+    x, y, depth = project_xyz(xyz, lon0)
+    if hide:
+        x = np.where((depth < 0) & (np.hypot(x, y) < 1.0), np.nan, x)
+    return x, y, depth / np.linalg.norm(xyz, axis=-1)
+
+
+def depth_alpha(mu, back=BACK_ALPHA, width=0.7):
     """Opacity of a line from its depth (mu, the cosine of the angle to the
     viewer): full in front, `back` behind, and a smooth change in between
     (over -width < mu < width) instead of a jump at the edge of the sphere."""
@@ -78,20 +136,27 @@ def depth_alpha(mu, back=0.3, width=0.7):
     return back + (1 - back) * t * t * (3 - 2 * t)
 
 
+def fade(segments, depth, alpha, factor):
+    """Multiply the opacity of the segments by `factor`, dropping those at 0."""
+    keep = factor > 0
+    return segments[keep], depth[keep], (alpha * factor)[keep]
+
+
 class DepthLines:
-    """Lines around a sphere whose opacity follows their depth.
+    """Lines around the Earth whose opacity follows their depth.
 
     Each polyline is given as x, y and mu (depth normalised by the distance to
     the centre); NaN points break the line (e.g. where the Earth hides it).
     Segments in front of the sphere's centre plane are drawn over the globe,
-    the others under it. With `limb` (a width in Earth radii), what passes
-    behind the Earth fades out towards its edge instead of being cut there.
-    With `outer` (radius, width), lines fade out as they approach that radius
-    on screen, e.g. the edge of the picture.
+    the others under it. `dash` cuts the lines into dashes of that length.
+    With `limb` (a width in Earth radii), what passes behind the Earth fades
+    out towards its edge instead of being cut there. With `outer` (radius,
+    width), lines fade out as they approach that radius on screen, e.g. the
+    edge of the picture.
     """
 
-    def __init__(self, ax, color, linewidth, back=0.3, dash=None, zorders=(1, 3),
-                 limb=None, outer=None):
+    def __init__(self, ax, color=ACCENT, linewidth=LINE_WIDTH, back=BACK_ALPHA,
+                 dash=None, limb=None, outer=None, zorders=(1, 3)):
         self.rgb = matplotlib.colors.to_rgb(color)
         self.back, self.dash, self.limb, self.outer = back, dash, limb, outer
         self.layers = []
@@ -103,7 +168,7 @@ class DepthLines:
 
     def draw(self, polylines, offset=0.0):
         """Draw polylines (x, y, mu); `offset` shifts the dashes along them."""
-        segments, depth = [], []
+        segments, depth = [np.empty((0, 2, 2))], [np.empty(0)]
         for x, y, mu in polylines:
             x, y, mu = map(np.asarray, (x, y, mu))
             ok = np.isfinite(x[:-1]) & np.isfinite(x[1:])
@@ -115,21 +180,18 @@ class DepthLines:
             segments.append(np.stack([np.column_stack([x[index], y[index]]),
                                       np.column_stack([x[index + 1], y[index + 1]])], axis=1))
             depth.append((mu[index] + mu[index + 1]) / 2)
-        segments = np.concatenate(segments) if segments else np.empty((0, 2, 2))
-        depth = np.concatenate(depth) if depth else np.empty(0)
+        segments, depth = np.concatenate(segments), np.concatenate(depth)
         alpha = depth_alpha(depth, self.back)
+        rho = np.hypot(*segments.mean(axis=1).T)
         if self.limb:
             # Behind the Earth: fade out towards its edge, hidden over its disk
+            factor = np.where(depth < 0, np.clip((rho - 1) / self.limb, 0, 1), 1.0)
+            segments, depth, alpha = fade(segments, depth, alpha, factor)
             rho = np.hypot(*segments.mean(axis=1).T)
-            fade = np.where(depth < 0, np.clip((rho - 1) / self.limb, 0, 1), 1.0)
-            keep = fade > 0
-            segments, depth, alpha = segments[keep], depth[keep], (alpha * fade)[keep]
         if self.outer:
             radius, width = self.outer
-            rho = np.hypot(*segments.mean(axis=1).T)
-            fade = np.clip((radius - rho) / width, 0, 1)
-            keep = fade > 0
-            segments, depth, alpha = segments[keep], depth[keep], (alpha * fade)[keep]
+            segments, depth, alpha = fade(segments, depth, alpha,
+                                          np.clip((radius - rho) / width, 0, 1))
         colors = np.column_stack([np.tile(self.rgb, (len(depth), 1)), alpha])
         for layer, keep in zip(self.layers, (depth < 0, depth >= 0)):
             layer.set_segments(segments[keep])
@@ -149,20 +211,10 @@ def glyph_path(char, fontsize, weight="normal"):
 
 
 class GlyphLayer:
-    """Characters drawn at arbitrary positions (data coordinates) on an axes.
+    """Characters drawn at arbitrary positions (data coordinates) on an axes,
+    in one of the STYLES (color, alpha), `fontsize` points high."""
 
-    Parameters
-    ----------
-    ax : matplotlib axes
-    styles : list of (color, alpha)
-        Available styles; glyphs refer to them by index.
-    fontsize : float
-        Character size, in points.
-    weight : str
-        Font weight, e.g. "bold".
-    """
-
-    def __init__(self, ax, styles, fontsize, zorder=2, weight="normal"):
+    def __init__(self, ax, fontsize, zorder=2, weight="normal", styles=STYLES):
         self.ax, self.styles, self.fontsize, self.zorder = ax, styles, fontsize, zorder
         self.weight = weight
         self.collections = {}
@@ -202,11 +254,66 @@ class GlyphLayer:
 
 
 # ---------------------------------------------------------------------------
+# The turning Earth, base of every video
+# ---------------------------------------------------------------------------
+
+class HeroGlobe:
+    """Transparent square figure with the Earth, made of characters, turning
+    once during the video. Subclasses draw around it: they extend frame(t),
+    which draws the Earth and returns the longitude facing the viewer."""
+
+    name = "globe"  # output file name, without extension
+    preview = 0.0  # fraction of the video shown by --preview
+
+    def __init__(self, seed=0):
+        rng = np.random.default_rng(seed)
+        self.lat, self.lon = fibonacci_sphere(N_POINTS)
+        self.land = globe.is_land(self.lat, self.lon)
+        self.chars = np.where(self.land, rng.choice(list(LAND_CHARS), N_POINTS),
+                              rng.choice(list(OCEAN_CHARS), N_POINTS))
+
+        self.fig = plt.figure(figsize=(SIZE, SIZE), dpi=DPI)
+        self.fig.patch.set_alpha(0)  # transparent: the website sets the color
+        self.ax = self.fig.add_axes((0, 0, 1, 1))
+        self.ax.set_xlim(-EXTENT, EXTENT)
+        self.ax.set_ylim(-EXTENT, EXTENT)
+        self.ax.set_aspect("equal")
+        self.ax.axis("off")
+        self.surface = GlyphLayer(self.ax, FONTSIZE, zorder=2, weight=WEIGHT)
+
+    def frame(self, t):
+        lon0 = (LON_START - 360 * t / DURATION + 180) % 360 - 180
+        x, y, mu = orthographic_xy(self.lat, self.lon, lon0)
+        front = mu > 0
+        style = np.where(self.land, LAND, OCEAN) + shade(x, y, mu)
+        self.surface.draw(x[front], y[front], self.chars[front], style[front])
+        return lon0
+
+    @classmethod
+    def main(cls, parser=None, **kwargs):
+        """Command line: render the video, or one frame with --preview. Extra
+        options can be given with `parser`; its arguments go to the class."""
+        parser = parser or argparse.ArgumentParser()
+        parser.description = (cls.__doc__ or "").splitlines()[0]
+        parser.add_argument("--preview", action="store_true", help="render one frame as PNG")
+        args = vars(parser.parse_args())
+        preview = args.pop("preview")
+        OUTPUT.mkdir(exist_ok=True)
+        figure = cls(**args, **kwargs)
+        if preview:
+            figure.frame(DURATION * cls.preview)
+            figure.fig.savefig(OUTPUT / f"{cls.name}.png", transparent=True)
+            print(f"saved {OUTPUT / cls.name}.png")
+        else:
+            render_transparent_video(figure.fig, figure.frame, OUTPUT / cls.name)
+
+
+# ---------------------------------------------------------------------------
 # Video
 # ---------------------------------------------------------------------------
 
-def render_transparent_video(fig, draw_frame, duration, fps, stem, matte="white",
-                             vp9_crf=52, hevc_quality=35):
+def render_transparent_video(fig, draw_frame, stem, duration=DURATION, fps=FPS,
+                             matte=OCEAN_COLOR, vp9_crf=52, hevc_quality=35):
     """Render draw_frame(t) into two videos with an alpha channel, for the web.
 
     The figure background must be transparent. Fully transparent pixels get
