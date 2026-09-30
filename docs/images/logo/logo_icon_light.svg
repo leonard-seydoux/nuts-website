@@ -42,7 +42,7 @@ L 56.112322 105.914911
 L 53.009214 109.018019 
 L 35.177808 91.186613 
 z
-" clip-path="url(#p80ff609bbb)" style="fill: #1298a6; stroke: #1298a6; stroke-width: 2.217836"/>
+" clip-path="url(#p80ff609bbb)" style="fill: #1a6fcc; stroke: #1a6fcc; stroke-width: 2.217836"/>
    </g>
    <g id="patch_3">
     <path d="M 63.552902 89.134435 
@@ -63,7 +63,7 @@ Q 73.683861 89.038896 72.426568 90.296189
 Q 70.515787 92.20697 68.276352 91.916531 
 Q 66.036917 91.61845 63.552902 89.134435 
 z
-" clip-path="url(#p80ff609bbb)" style="fill: #848418; stroke: #848418; stroke-width: 2.217836"/>
+" clip-path="url(#p80ff609bbb)" style="fill: #207337; stroke: #207337; stroke-width: 2.217836"/>
    </g>
    <g id="patch_4">
     <path d="M 90.162435 71.864798 
@@ -76,7 +76,7 @@ L 79.939758 52.592664
 L 75.415029 57.117392 
 L 90.162435 71.864798 
 z
-" clip-path="url(#p80ff609bbb)" style="fill: #1298a6; stroke: #1298a6; stroke-width: 2.217836"/>
+" clip-path="url(#p80ff609bbb)" style="fill: #1a6fcc; stroke: #1a6fcc; stroke-width: 2.217836"/>
    </g>
    <g id="patch_5">
     <path d="M 94.029855 52.351905 
@@ -109,7 +109,7 @@ Q 99.830985 50.9685 98.753305 50.84621
 Q 97.671803 50.720098 96.418331 51.278046 
 L 94.029855 52.351905 
 z
-" clip-path="url(#p80ff609bbb)" style="fill: #1298a6; stroke: #1298a6; stroke-width: 2.217836"/>
+" clip-path="url(#p80ff609bbb)" style="fill: #1a6fcc; stroke: #1a6fcc; stroke-width: 2.217836"/>
    </g>
    <g id="line2d_1">
     <path d="M 123.191319 123.191319 
@@ -218,7 +218,7 @@ L 126.009461 119.420767
 L 124.267233 121.927022 
 L 123.191319 123.191319 
 L 123.191319 123.191319 
-" clip-path="url(#p80ff609bbb)" style="fill: none; stroke: #e377c2; stroke-width: 6.336673; stroke-linecap: round"/>
+" clip-path="url(#p80ff609bbb)" style="fill: none; stroke: #db61a2; stroke-width: 6.336673; stroke-linecap: round"/>
    </g>
    <g id="line2d_2">
     <path d="M 86.345335 9.485635 
@@ -321,7 +321,7 @@ L 11.288059 83.489596
 L 10.683593 84.437852 
 L 10.082785 85.389765 
 L 9.485635 86.345335 
-" clip-path="url(#p80ff609bbb)" style="fill: none; stroke: #e377c2; stroke-width: 6.336673; stroke-linecap: round"/>
+" clip-path="url(#p80ff609bbb)" style="fill: none; stroke: #db61a2; stroke-width: 6.336673; stroke-linecap: round"/>
    </g>
   </g>
  </g>

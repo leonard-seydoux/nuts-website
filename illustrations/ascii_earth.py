@@ -27,11 +27,11 @@ from matplotlib.textpath import TextPath  # noqa: E402
 from matplotlib.transforms import Affine2D  # noqa: E402
 from global_land_mask import globe  # noqa: E402
 
-# Matplotlib default palette (tab10), shared with the website
-C0, C1, C2, C3, C4 = "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"
-C5, C6, C7, C8, C9 = "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
-OCEAN_COLOR, LAND_COLOR = C9, C8
-ACCENT = C6  # earthquakes, satellites, meshes, axes, field lines
+# GitHub's colors (Primer), shared with the website (docs/stylesheets/extra.css):
+# mid shades of its scales, readable on light and dark backgrounds
+BLUE, GREEN, PINK = "#218bff", "#2da44e", "#db61a2"
+OCEAN_COLOR, LAND_COLOR = BLUE, GREEN
+ACCENT = PINK  # earthquakes, satellites, meshes, axes, field lines
 
 FONT = "DejaVu Sans Mono"
 ADVANCE = 1233 / 2048  # character width of DejaVu Sans Mono, in em

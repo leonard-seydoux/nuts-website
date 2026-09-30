@@ -1,14 +1,14 @@
 """NuTS logo, with the colors and the font of the illustrations.
 
-A cyan ≈ and an olive # (DejaVu Sans Mono, bold), the two characters of the
+A blue ≈ and a green # (DejaVu Sans Mono, bold), the two characters of the
 illustrations, side by side inside a pink hazelnut (a nod to the name of the
 network) tilted so that its point faces the bottom right, on a transparent
 background. One design, two sets of colors:
 
-- logo_icon.svg/.png: the matplotlib colors, for the dark theme; the PNG is
+- logo_icon.svg/.png: the GitHub (Primer) colors, for the dark theme; the PNG is
   also the favicon (copied as docs/images/logo/favicon.png) (they stand out on dark and blue backgrounds),
 - logo_icon_light.svg: darker shades, for the header of the light theme,
-  where a plain olive # would vanish on the olive bar.
+  where the plain colors would fade on the light bar.
 
 Usage:
     uv run logo.py
@@ -27,7 +27,7 @@ from matplotlib.patches import PathPatch
 from matplotlib.textpath import TextPath
 from matplotlib.transforms import Affine2D
 
-from ascii_earth import ACCENT, C8, C9, FONT
+from ascii_earth import ACCENT, FONT, LAND_COLOR, OCEAN_COLOR
 
 OUTPUT = Path(__file__).parent / "outputs" / "logo"
 
@@ -48,11 +48,11 @@ TILT = -135  # the nut is turned so that its point faces the bottom right (degre
 WORD = ("NuTS", 1.25, (0.0, -0.08))
 WORD_ANGLE = 45  # degrees
 WORD_WEIGHT = 0.035  # outline added around each letter, extra bold (nut half-widths)
-# Colors of the letters of NuTS, per file: the u in olive, N, T and S in cyan;
-# darker shades for the light theme, readable on the olive bar
+# Colors of the letters of NuTS, per file: the u in green, N, T and S in blue;
+# darker shades for the light theme, readable on the light bar
 COLORS = {
-    "logo_icon": {"u": C8, "other": C9},
-    "logo_icon_light": {"u": blend(C8, 0.7, "black"), "other": blend(C9, 0.8, "black")},
+    "logo_icon": {"u": LAND_COLOR, "other": OCEAN_COLOR},
+    "logo_icon_light": {"u": blend(LAND_COLOR, 0.7, "black"), "other": blend(OCEAN_COLOR, 0.8, "black")},
 }
 MARGIN = 0.08
 
