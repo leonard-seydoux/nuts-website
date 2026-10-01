@@ -1,82 +1,21 @@
 ---
-description: Rencontres plénières, formations et journées thématiques du réseau
-timeline: [calendrier]
+description: Écoles et formations du réseau
 ---
 
 # Rencontres
 
-Une rencontre plénière par an (présentations et travaux pratiques), des formations centrées sur un outil, et des journées thématiques. Toutes sont ouvertes aux personnels INSU-TS et au-delà.
+Chaque année en mai, les Journées NuTS mêlent présentations scientifiques et travaux pratiques. Le réseau organise aussi des écoles thématiques, d'hiver ou d'été, et des formations centrées sur un outil. Toutes sont ouvertes aux personnels INSU-TS et au-delà.
 
 ## Calendrier
 
-- **[5ème rencontre plénière](workshop-2027.md)**
-
-    #### 2027 · Nantes · mai
-
-    Modélisation multi-échelle. À venir.
-
-    ![5ème rencontre plénière](../images/2027-workshop-nantes.jpg)
-
-- **[Journées thématiques GAIA](gaia-2027.md)**
-
-    #### 2027 · Les Houches · janvier
-
-    Intelligence artificielle en géosciences. À venir.
-
-    ![Journées thématiques GAIA](../images/2027-gaia.jpg)
-
-- **[4ème rencontre plénière](workshop-2026.md)**
-
-    #### 2026 · Strasbourg · mai
-
-    Assimilation de données.
-
-    ![4ème rencontre plénière](../images/2026-workshop.jpg)
-
-- **[Journées thématiques IA](ia-ts-2025.md)**
-
-    #### 2025 · Paris · juillet
-
-    Intelligence artificielle en Terre solide.
-
-    ![Journées thématiques IA](../images/2025-workshop-ia.png)
-
-- **[3ème rencontre plénière](workshop-2025.md)**
-
-    #### 2025 · Grenoble · mai
-
-    Données et infrastructures.
-
-    ![3ème rencontre plénière](../images/2025-workshop-group-photo.jpg)
-
-- **[Formation SPECFEM](specfem-2025.md)**
-
-    #### 2025 · Nantes · avril
-
-    Éléments spectraux avec SPECFEM.
-
-    ![Formation SPECFEM](../images/2025-workshop-specfem.jpg)
-
-- **[2ème rencontre plénière](workshop-2024.md)**
-
-    #### 2024 · Strasbourg · mai
-
-    Problèmes inverses.
-
-    ![2ème rencontre plénière](../images/2024-workshop-group-photo-2.jpg)
-
-- **[1ère rencontre plénière](workshop-2023.md)**
-
-    #### 2023 · Lyon · mai
-
-    Apprentissage machine.
-
-    ![1ère rencontre plénière](../images/2023-workshop-group-photo.jpg)
-
-- **[Rencontre de lancement](kickoff-2022.md)**
-
-    #### 2022 · Paris · octobre
-
-    Présentation du réseau et de ses orientations.
-
-    ![Rencontre de lancement](../images/2022-kickoff.jpg)
+| | Date | Nom | Lieu | Thème |
+| --- | --- | --- | --- | --- |
+| ![Journées NuTS 2027](../images/2027-workshop-nantes.jpg) | Mai 2027 | [Journées NuTS](workshop-2027.md) | Nantes | Modélisation multi-échelle |
+| ![École d'hiver GAIA 2027](../images/2027-gaia.jpg) | Janvier 2027 | [École d'hiver GAIA](gaia-2027.md) | Les Houches | Intelligence artificielle en géosciences |
+| ![Journées NuTS 2026](../images/2026-workshop.jpg) | Mai 2026 | [Journées NuTS](workshop-2026.md) | Strasbourg | Assimilation de données |
+| ![École d'été IA 2025](../images/2025-workshop-ia.png) | Juillet 2025 | [École d'été IA](ia-ts-2025.md) | Paris | Intelligence artificielle en Terre solide |
+| ![Journées NuTS 2025](../images/2025-workshop-group-photo.jpg) | Mai 2025 | [Journées NuTS](workshop-2025.md) | Grenoble | Données et infrastructures |
+| ![Formation SPECFEM 2025](../images/2025-workshop-specfem.jpg) | Avril 2025 | [Formation SPECFEM](specfem-2025.md) | Nantes | Éléments spectraux avec SPECFEM |
+| ![Journées NuTS 2024](../images/2024-workshop-group-photo-2.jpg) | Mai 2024 | [Journées NuTS](workshop-2024.md) | Strasbourg | Problèmes inverses |
+| ![Journées NuTS 2023](../images/2023-workshop-group-photo.jpg) | Mai 2023 | [Journées NuTS](workshop-2023.md) | Lyon | Apprentissage machine |
+| ![Lancement du réseau 2022](../images/2022-kickoff.jpg) | Octobre 2022 | [Lancement du réseau](kickoff-2022.md) | Paris | Présentation du réseau et de ses orientations |

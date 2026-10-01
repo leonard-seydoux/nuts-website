@@ -1,8 +1,8 @@
 ---
-description: Nantes, mai 2027 · Modélisation multi-échelle
+description: Nantes, mai 2027, modélisation multi-échelle
 ---
 
-# 5ème rencontre plénière
+# Journées NuTS 2027
 
 ![Amphithéâtre B, faculté des sciences de Nantes Université](../images/2027-workshop-nantes.jpg)
 
@@ -10,7 +10,7 @@ description: Nantes, mai 2027 · Modélisation multi-échelle
 
 ## Présentation
 
-La cinquième rencontre plénière du réseau sera consacrée à la modélisation multi-échelle. Le programme sera annoncé prochainement sur la [liste de diffusion](../contact.md#sabonner).
+Les Journées NuTS 2027 seront consacrées à la modélisation multi-échelle. Le programme sera annoncé prochainement sur la [liste de diffusion](../contact.md#sabonner).
 
 ## Lieu
 

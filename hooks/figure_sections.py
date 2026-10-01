@@ -4,8 +4,10 @@ Pages opt in with `figure_sections: true` in their front matter. In each
 `##` section that contains exactly one image-only paragraph, the heading and
 text go in one column and the image in the other, vertically centered. The
 Markdown order decides the side: image after the text sits on the right,
-image right after the heading sits on the left. The Markdown itself stays
-plain, so it renders cleanly anywhere.
+image right after the heading sits on the left. The text always comes first
+in the HTML, so that on phones, where the columns stack, every section reads
+heading, text, image. The Markdown itself stays plain, so it renders cleanly
+anywhere.
 """
 
 import re
@@ -24,10 +26,8 @@ def _layout(section):
     before, after = section.split(image)
     heading = HEADING.match(before).group(0)
     image_left = not before[len(heading):].strip()
-    columns = [f"<div>{before + after}</div>", image]
-    if image_left:
-        columns.reverse()
-    return f'<div class="figure-text">{"".join(columns)}</div>'
+    side = " figure-text--left" if image_left else ""
+    return f'<div class="figure-text{side}"><div>{before + after}</div>{image}</div>'
 
 
 def on_page_content(html, page, config, files):

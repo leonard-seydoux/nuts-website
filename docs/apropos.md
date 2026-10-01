@@ -1,43 +1,44 @@
 ---
-description: Le réseau thématique de l'INSU consacré au numérique pour la Terre Solide
+description: Contexte, objectifs et pilotage du réseau NuTS
 ---
 
 # À propos
 
 ## Contexte
 
-Le calcul et l'analyse de données occupent une place croissante en Terre solide. Les [prospectives de l'INSU](https://www.insu.cnrs.fr/fr/prospective) 2020-2021 en ont fait trois défis majeurs : valoriser les données (défi 13), les ouvrir (défi 14) et faire converger calcul haute performance et données massives (défi 17). Voir aussi le [document prospectif Terre solide](https://www.insu.cnrs.fr/sites/institut_insu/files/page/2021-09/Prospective_INSU_TS_2021-25.pdf).
+Le calcul et l'analyse de données prennent une place croissante en Terre solide. Les [prospectives de l'INSU](https://www.insu.cnrs.fr/fr/prospective) en ont fait trois défis majeurs : valoriser les données, les ouvrir, et faire converger calcul haute performance et données massives (défis 13, 14 et 17).
 
-La communauté a une forte culture du développement logiciel : un recensement partiel compte 117 codes et 64 responsables. NuTS a été créé pour la fédérer, rendre ces développements visibles et mutualiser les expertises.
+La communauté a aussi une forte culture du développement logiciel. Un recensement partiel compte 117 codes et 64 responsables. Le réseau NuTS est né pour fédérer ces personnes, rendre leurs développements visibles et mutualiser les expertises.
 
 ## Objectifs
 
-- Diffuser les bonnes pratiques de développement logiciel (forge, documentation, maintenance)
-- Accompagner le développement de codes de simulation et de chaînes de traitement
-- Rendre visibles et accessibles les outils de la communauté, avec [FormaTerre](https://www.poleterresolide.fr) et [DataTerra](https://www.data-terra.org)
-- Proposer des formations scientifiques et techniques, notamment aux doctorants
-- Participer aux actions HPC et données de l'INSU
-- Soutenir l'IA en Terre solide et les collaborations avec [INS2I](https://www.ins2i.cnrs.fr/fr), [INSMI](https://www.insmi.cnrs.fr/fr) et [INRIA](https://inria.fr/fr)
+Le réseau diffuse les bonnes pratiques du développement logiciel, de la forge à la documentation et à la maintenance, et accompagne le développement des codes de simulation et des chaînes de traitement. Il rend les outils de la communauté visibles et accessibles, avec [FormaTerre](https://www.poleterresolide.fr) et [DataTerra](https://www.data-terra.org), et propose des formations scientifiques et techniques, en particulier pour les doctorants.
 
-
+Il participe aussi aux actions de l'INSU sur le calcul haute performance et les données. Enfin, il soutient le développement de l'intelligence artificielle en Terre solide, en lien avec l'[INS2I](https://www.ins2i.cnrs.fr/fr), l'[INSMI](https://www.insmi.cnrs.fr/fr) et l'[INRIA](https://inria.fr/fr).
 
 ## Pilotage
 
-Le réseau est animé par Léonard Seydoux ([seydoux@ipgp.fr](mailto:seydoux@ipgp.fr)) et un comité de pilotage qui se réunit chaque mois, joignable à [cp-gdr-nuts@services.cnrs.fr](mailto:cp-gdr-nuts@services.cnrs.fr) :
+Un comité de pilotage coordonne le réseau et se réunit chaque mois. Il réunit les personnes ci-dessous. Pour lui écrire, utilisez sa liste [:material-email-outline:](mailto:cp-gdr-nuts@services.cnrs.fr "cp-gdr-nuts@services.cnrs.fr"). Elle n'est pas modérée : votre message parvient directement à tous ses membres. L'animation du réseau est assurée par Léonard Seydoux [:material-email-outline:](mailto:seydoux@ipgp.fr "seydoux@ipgp.fr").
 
-- Albanne Lecointre ([albanne.lecointre@univ-grenoble-alpes.fr](mailto:albanne.lecointre@univ-grenoble-alpes.fr))
-- Alizia Tarayoun ([alizia.tarayoun@univ-grenoble-alpes.fr](mailto:alizia.tarayoun@univ-grenoble-alpes.fr))
-- Emmanuel Chaljub ([emmanuel.chaljub@univ-grenoble-alpes.fr](mailto:emmanuel.chaljub@univ-grenoble-alpes.fr))
-- Romain Brossier ([romain.brossier@univ-grenoble-alpes.fr](mailto:romain.brossier@univ-grenoble-alpes.fr))
-- Benoît Seignovert ([benoit.seignovert@univ-nantes.fr](mailto:benoit.seignovert@univ-nantes.fr))
-- Yann Capdeville ([yann.capdeville@univ-nantes.fr](mailto:yann.capdeville@univ-nantes.fr))
-- Guillaume Caumon ([guillaume.caumon@univ-lorraine.fr](mailto:guillaume.caumon@univ-lorraine.fr))
-- Paul Cupillard ([paul.cupillard@univ-lorraine.fr](mailto:paul.cupillard@univ-lorraine.fr))
-- Boris Gailleton ([boris.gailleton@univ-rennes.fr](mailto:boris.gailleton@univ-rennes.fr))
-- Laetitia Le Pourhiet ([laetitia.le_pourhiet@sorbonne-universite.fr](mailto:laetitia.le_pourhiet@sorbonne-universite.fr))
-- Alexandre Fournier ([fournier@ipgp.fr](mailto:fournier@ipgp.fr))
-- Clément Hibert ([hibert@unistra.fr](mailto:hibert@unistra.fr))
-- Jean-Philippe Malet ([jeanphilippe.malet@unistra.fr](mailto:jeanphilippe.malet@unistra.fr))
-- Romain Chassagne ([r.chassagne@brgm.fr](mailto:r.chassagne@brgm.fr))
-- Valérie Cayol ([valerie.cayol@uca.fr](mailto:valerie.cayol@uca.fr))
-- Léonard Seydoux ([seydoux@ipgp.fr](mailto:seydoux@ipgp.fr))
+<div class="compact" markdown>
+
+| Nom | Affiliation |
+| --- | --- |
+| Romain Brossier | ISTerre, Université Grenoble Alpes |
+| Yann Capdeville | LPG, Nantes Université |
+| Guillaume Caumon | GeoRessources, Université de Lorraine |
+| Valérie Cayol | LMV, Université Clermont Auvergne |
+| Emmanuel Chaljub | ISTerre, Université Grenoble Alpes |
+| Romain Chassagne | BRGM |
+| Paul Cupillard | GeoRessources, Université de Lorraine |
+| Alexandre Fournier | IPGP, Université Paris Cité |
+| Boris Gailleton | Géosciences Rennes, Université de Rennes |
+| Clément Hibert | ITES, Université de Strasbourg |
+| Laetitia Le Pourhiet | ISTeP, Sorbonne Université |
+| Albanne Lecointre | ISTerre, Université Grenoble Alpes |
+| Jean-Philippe Malet | ITES, Université de Strasbourg |
+| Benoît Seignovert | OSUNA, Nantes Université |
+| Léonard Seydoux | IPGP, Université Paris Cité |
+| Alizia Tarayoun | ISTerre, Université Grenoble Alpes |
+
+</div>

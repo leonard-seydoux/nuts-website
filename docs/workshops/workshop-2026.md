@@ -1,10 +1,10 @@
 ---
-description: Strasbourg, 26–29 mai 2026 · Assimilation de données
+description: Strasbourg, du 26 au 29 mai 2026, assimilation de données
 ---
 
-# 4ème rencontre plénière
+# Journées NuTS 2026
 
-![4ème rencontre plénière](../images/2026-workshop.jpg)
+![Journées NuTS 2026](../images/2026-workshop.jpg)
 
 ## Présentation
 

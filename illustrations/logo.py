@@ -1,6 +1,6 @@
 """NuTS logo, with the colors and the font of the illustrations.
 
-A blue ≈ and a green # (DejaVu Sans Mono, bold), the two characters of the
+A blue ≈ and a yellow # (DejaVu Sans Mono, bold), the two characters of the
 illustrations, side by side inside a pink hazelnut (a nod to the name of the
 network) tilted so that its point faces the bottom right, on a transparent
 background. One design, two sets of colors:
@@ -48,7 +48,7 @@ TILT = -135  # the nut is turned so that its point faces the bottom right (degre
 WORD = ("NuTS", 1.25, (0.0, -0.08))
 WORD_ANGLE = 45  # degrees
 WORD_WEIGHT = 0.035  # outline added around each letter, extra bold (nut half-widths)
-# Colors of the letters of NuTS, per file: the u in green, N, T and S in blue;
+# Colors of the letters of NuTS, per file: the u in yellow, N, T and S in blue;
 # darker shades for the light theme, readable on the light bar
 COLORS = {
     "logo_icon": {"u": LAND_COLOR, "other": OCEAN_COLOR},

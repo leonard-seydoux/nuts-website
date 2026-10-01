@@ -97,6 +97,7 @@
     .mdx-hero__content p {
         color: var(--nuts-hero-text);
         font-size: 1.1rem;
+        line-height: 1.45;
         margin: 0;
     }
 
@@ -240,16 +241,19 @@
             </script>
             <h1>NuTS</h1>
             <p>Le réseau thématique de l'INSU consacré au Numérique pour la Terre Solide</p>
+            {#- Buttons announcing the upcoming rencontres: `events` in the front
+                matter of docs/index.md -#}
+            {% if page.meta.events %}
             <div class="mdx-hero__events">
-                <a class="mdx-hero__event" href="{{ 'workshops/gaia-2027/' | url }}">
-                    <span>Les Houches · janvier 2027</span>
-                    Journées thématiques GAIA →
+                {% for event in page.meta.events %}
+                <a class="mdx-hero__event" href="{{ event.link | url }}">
+                    <span>{{ event.when }}</span>
+                    {{ event.title }} →
+                    {% if event.theme %}<span class="mdx-hero__theme">{{ event.theme }}</span>{% endif %}
                 </a>
-                <a class="mdx-hero__event" href="{{ 'workshops/workshop-2027/' | url }}">
-                    <span>Nantes · mai 2027</span>
-                    5ème rencontre plénière →
-                </a>
+                {% endfor %}
             </div>
+            {% endif %}
         </div>
         <video class="mdx-hero__video alpha-video" autoplay muted loop playsinline
             data-base="{{ 'videos/' | url }}" data-random></video>

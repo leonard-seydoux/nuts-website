@@ -6,13 +6,13 @@ description: Comité de pilotage, liste de diffusion et annonces
 
 Pour toute question sur les activités et la gouvernance du réseau, écrivez au comité de pilotage. L'adresse n'est pas modérée : les messages parviennent à tous ses membres.
 
-[cp-gdr-nuts@services.cnrs.fr](mailto:cp-gdr-nuts@services.cnrs.fr)
+[:material-email-outline: Écrire au comité de pilotage](mailto:cp-gdr-nuts@services.cnrs.fr "cp-gdr-nuts@services.cnrs.fr")
 
 ## Diffuser une annonce
 
 La liste du réseau (environ 200 personnes) accueille les annonces de thèses, postdocs et postes, académiques ou industriels, en lien avec le numérique en Terre solide, ainsi que les annonces d'ateliers, de congrès et de sessions. Elle est modérée : la diffusion peut prendre un peu de temps.
 
-[gdr-nuts@services.cnrs.fr](mailto:gdr-nuts@services.cnrs.fr)
+[:material-email-outline: Envoyer une annonce à la liste](mailto:gdr-nuts@services.cnrs.fr "gdr-nuts@services.cnrs.fr")
 
 ## S'abonner
 

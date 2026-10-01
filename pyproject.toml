@@ -1,7 +1,7 @@
 [project]
 name = "nuts-website"
 version = "0.1.0"
-description = "Add your description here"
+description = "Site web du réseau thématique NuTS (Numérique pour la Terre Solide) et ses illustrations"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

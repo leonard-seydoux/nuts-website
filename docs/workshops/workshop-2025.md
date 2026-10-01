@@ -1,10 +1,10 @@
 ---
-description: Grenoble, 19–22 mai 2025 · Données et infrastructures
+description: Grenoble, du 19 au 22 mai 2025, données et infrastructures
 ---
 
-# 3ème rencontre plénière
+# Journées NuTS 2025
 
-![3ème rencontre plénière](../images/2025-workshop-group-photo.jpg)
+![Journées NuTS 2025](../images/2025-workshop-group-photo.jpg)
 
 ## Présentation
 

@@ -4,7 +4,7 @@
  */
 
 /* GitHub's colors (Primer, https://primer.style/foundations/color): neutral
-   backgrounds, pink links, bordered tables, green buttons, per theme. The
+   backgrounds, pink links and buttons, per theme. The
    illustrations, shown on both, take mid shades of Primer's scales. Declared on
    the scheme too, so that the colors defined per theme below resolve */
 :root,
@@ -46,10 +46,6 @@
     --md-code-hl-comment-color: var(--md-default-fg-color--light);
     --md-code-hl-variable-color: var(--gh-hl-variable);
     --md-code-hl-generic-color: var(--gh-hl-function);
-
-    /* Typography: the system font, as on GitHub (Material appends
-       -apple-system, BlinkMacSystemFont, Helvetica and Arial) */
-    --md-text-font: "Segoe UI";
 }
 
 /* Light theme: GitHub light */
@@ -65,9 +61,9 @@
     --nuts-bar-text: var(--nuts-hero-text);
     --nuts-border: #d1d9e0;
     --nuts-link: #bf3989;  /* pink (sponsors) */
-    --nuts-main: #1f883d;  /* buttons */
-    --nuts-main-hover: #1c8139;
-    --nuts-accent: #bf3989;  /* timeline, hero buttons */
+    --nuts-main: var(--nuts-link);  /* buttons, in the pink of the theme */
+    --nuts-main-hover: #99286e;
+    --nuts-accent: #bf3989;  /* hero buttons */
     --nuts-note: #1a7f37;
     --md-default-fg-color: #1f2328;
     --md-default-fg-color--light: #59636e;
@@ -75,6 +71,12 @@
     --md-default-fg-color--lightest: color-mix(in srgb, #59636e 15%, transparent);
     --md-code-bg-color: #f6f8fa;
     --md-code-fg-color: #1f2328;
+    /* Footer: light gray like the header, rather than Material's black */
+    --md-footer-bg-color: var(--nuts-hero-background);
+    --md-footer-bg-color--dark: var(--nuts-hero-background);
+    --md-footer-fg-color: #1f2328;
+    --md-footer-fg-color--light: #59636e;
+    --md-footer-fg-color--lighter: #818b98;
     --gh-hl-keyword: #cf222e;
     --gh-hl-string: #0a3069;
     --gh-hl-constant: #0550ae;
@@ -95,9 +97,9 @@
     --nuts-bar-text: var(--nuts-hero-text);
     --nuts-border: #3d444d;
     --nuts-link: #db61a2;  /* pink (sponsors) */
-    --nuts-main: #238636;  /* buttons */
-    --nuts-main-hover: #29903b;
-    --nuts-accent: #db61a2;  /* timeline, hero buttons */
+    --nuts-main: var(--nuts-link);  /* buttons, in the pink of the theme */
+    --nuts-main-hover: #bf3989;
+    --nuts-accent: #db61a2;  /* hero buttons */
     --nuts-note: #3fb950;
     --md-default-fg-color: #f0f6fc;
     --md-default-fg-color--light: #9198a1;
@@ -107,11 +109,31 @@
     --md-typeset-a-color: var(--nuts-link);
     --md-code-bg-color: #151b23;
     --md-code-fg-color: #f0f6fc;
+    /* Footer: dark gray like the header */
+    --md-footer-bg-color: var(--nuts-hero-background);
+    --md-footer-bg-color--dark: var(--nuts-hero-background);
+    --md-footer-fg-color: #f0f6fc;
+    --md-footer-fg-color--light: #9198a1;
+    --md-footer-fg-color--lighter: #656c76;
     --gh-hl-keyword: #ff7b72;
     --gh-hl-string: #a5d6ff;
     --gh-hl-constant: #79c0ff;
     --gh-hl-function: #d2a8ff;
     --gh-hl-variable: #ffa657;
+}
+
+/* The page behind the page, and the native window scrollbars (Safari shows
+   both around the site): same color and color scheme as the page, per theme.
+   Material only sets them on body, where the theme is, so html follows it
+   with :has() */
+html:has(body[data-md-color-scheme="default"]) {
+    background-color: #ffffff;
+    color-scheme: light;
+}
+
+html:has(body[data-md-color-scheme="slate"]) {
+    background-color: #0d1117;
+    color-scheme: dark;
 }
 
 /* Custom styling for info admonitions */
@@ -177,7 +199,7 @@
 }
 
 .md-tabs__link {
-    font-size: 0.85rem !important;
+    font-size: 0.8rem !important;
 }
 
 .md-header__topic {
@@ -185,21 +207,24 @@
 }
 
 
-/* Buttons */
-.md-button {
+/* Buttons ({ .md-button } and { .md-button .md-button--primary } in Markdown).
+   Material colors them with --md-primary-fg-color, the light gray of the
+   header here: selectors as specific as Material's, to win over them */
+.md-typeset .md-button {
     color: var(--nuts-main);
     border-color: var(--nuts-main);
 }
 
-.md-button--primary {
+.md-typeset .md-button--primary {
     background-color: var(--nuts-main);
     color: #ffffff;
     border-color: var(--nuts-main);
 }
 
-.md-button--primary:hover,
-.md-button--primary:focus {
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus {
     background-color: var(--nuts-main-hover);
+    color: #ffffff;
     border-color: var(--nuts-main-hover);
 }
 
@@ -221,15 +246,6 @@
 /* Search highlighting */
 .md-search-result__meta {
     background-color: var(--nuts-main);
-}
-
-/* Scrollbar (webkit browsers) */
-::-webkit-scrollbar-thumb {
-    background-color: var(--nuts-main);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--nuts-main-hover);
 }
 
 /* Typography */
@@ -258,7 +274,7 @@ body[data-md-color-scheme][data-md-color-primary] {
 /* Paragraphs and list items at the same size */
 .md-typeset p,
 .md-typeset li {
-    font-size: 1.08rem;
+    font-size: 1rem;
     line-height: 1.45;
 }
 
@@ -270,55 +286,42 @@ body[data-md-color-scheme][data-md-color-primary] {
 .mdx-partners__content {
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
 }
 
+/* Partner logos, in the text color of the footer */
 .mdx-partners__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 3rem;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
 }
 
 .mdx-partners__logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    transition: transform 0.2s ease;
+    gap: 0.6rem;
+    color: var(--md-footer-fg-color);
 }
 
-.mdx-partners__logo:hover {
-    transform: scale(1.05);
-}
-
-.mdx-partners__logo img {
-    max-width: 180px;
-    max-height: 80px;
+/* CNRS logo, no filter: the official white version in the dark theme, its two
+   colors swapped (blue disc, white letters) in the light theme */
+.mdx-partners__logo img.mdx-partners__cnrs {
+    height: 4rem;
     width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.7;
-    transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-.mdx-partners__logo:hover img {
-    filter: grayscale(0%);
-    opacity: 1;
+[data-md-color-scheme="default"] .mdx-partners__cnrs--dark,
+[data-md-color-scheme="slate"] .mdx-partners__cnrs--light {
+    display: none;
 }
 
-@media screen and (max-width: 768px) {
-    .mdx-partners__grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 2rem;
-    }
-
-    .mdx-partners__logo img {
-        max-width: 140px;
-        max-height: 60px;
-    }
+.mdx-partners__label {
+    text-align: left;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
 }
 
 /* Headings always start below floated images (align=left/right) */
@@ -337,6 +340,12 @@ body[data-md-color-scheme][data-md-color-primary] {
 
 .md-typeset .figure-text>div {
     flex: 1;
+    min-width: 0;
+}
+
+/* Image on the left (image right after the heading in the Markdown) */
+.md-typeset .figure-text--left {
+    flex-direction: row-reverse;
 }
 
 .md-typeset .figure-text>div> :first-child {
@@ -356,9 +365,10 @@ body[data-md-color-scheme][data-md-color-primary] {
     height: auto;
 }
 
-/* Stack image and text on narrow screens */
+/* Stack text and image on narrow screens, text first */
 @media screen and (max-width: 44.9375em) {
-    .md-typeset .figure-text {
+    .md-typeset .figure-text,
+    .md-typeset .figure-text--left {
         flex-direction: column;
     }
 }
@@ -408,7 +418,7 @@ body[data-md-color-scheme][data-md-color-primary] {
 .page-hero h1 {
     margin: 0;
     color: var(--nuts-hero-text);
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     font-weight: 700;
     line-height: 1.2;
 }
@@ -416,7 +426,8 @@ body[data-md-color-scheme][data-md-color-primary] {
 .page-hero p {
     margin: 1rem 0 0;
     max-width: 40rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.45;
     opacity: 0.85;
 }
 
@@ -475,57 +486,44 @@ body:has(.page-hero) .md-typeset h2 {
     color: var(--md-default-fg-color);
 }
 
-/* Tables */
+/* Tables, close to plain Markdown: no frame, no vertical lines, a rule under
+   the header and thin lines between rows */
 .md-typeset table:not([class]) {
-    border-radius: 0.4rem;
-    overflow: hidden;
-    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.08);
+    font-size: 0.88rem;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
 }
 
-/* Tables (presentations of the rencontre pages): larger text, names in bold */
-.md-typeset table:not([class]) {
-    font-size: 0.95rem;
+/* Tables span the full width of the text. Material shows them as inline
+   blocks, as wide as their content; its scroll wrapper still lets wide tables
+   scroll sideways on phones */
+.md-typeset .md-typeset__scrollwrap {
+    margin-left: 0;
+    margin-right: 0;
 }
 
-.md-typeset table:not([class]) td:first-child {
-    font-weight: 600;
+.md-typeset .md-typeset__table {
+    display: block;
+    width: 100%;
+    padding: 0;
 }
 
-/* Header row: subtle background, bordered cells, as on GitHub */
-.md-typeset table:not([class]) {
-    border: 1px solid var(--nuts-border);
+.md-typeset .md-typeset__table table:not([class]) {
+    display: table;
+    width: 100%;
 }
 
 .md-typeset table:not([class]) th {
-    background: var(--nuts-hero-background);
+    background: none;
     color: var(--md-default-fg-color);
+    border: none;
+    border-bottom: 1px solid var(--nuts-border);
 }
 
-.md-typeset table:not([class]) td,
-.md-typeset table:not([class]) th {
-    border: 1px solid var(--nuts-border);
-}
-
-/* Numbered cards (hooks/list_cards.py) */
-.md-typeset .grid.cards.numbered>ul {
-    counter-reset: card;
-}
-
-.md-typeset .grid.cards.numbered>ul>li {
-    counter-increment: card;
-    position: relative;
-    padding-top: 2.8rem;
-}
-
-.md-typeset .grid.cards.numbered>ul>li::before {
-    content: counter(card, decimal-leading-zero);
-    position: absolute;
-    top: 0.6rem;
-    left: 0.8rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--nuts-link);
-    opacity: 0.8;
+.md-typeset table:not([class]) td {
+    border: none;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
 }
 
 /* Wider side margins on tablet and desktop (phones keep the default) */
@@ -564,91 +562,28 @@ body:has(.page-hero) .md-typeset h2 {
     color: var(--nuts-bar-text);
 }
 
-/* Timeline (hooks/list_cards.py, `timeline: true`): Workshops page */
-.md-typeset .timeline>ul {
-    list-style: none;
-    margin: 2.5rem 0 0 0.6rem;
-    padding: 0 0 0 2rem;
-    border-left: 0.06rem solid var(--nuts-accent);
+/* Compact tables: wrap one in <div class="compact" markdown> to tighten its
+   rows, the other tables keep their spacing */
+.md-typeset .compact table:not([class]) th,
+.md-typeset .compact table:not([class]) td {
+    padding: 0.35em 0.8em;
 }
 
-.md-typeset .timeline>ul>li {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 15rem;
-    column-gap: 2rem;
-    align-items: start;
-    margin: 0 0 3rem;
+/* Cell text level with the middle of the thumbnails */
+.md-typeset table:not([class]) td {
+    vertical-align: middle;
 }
 
-/* A small + on the line */
-.md-typeset .timeline>ul>li::before {
-    content: "+";
-    position: absolute;
-    left: calc(-2rem - 0.35rem - 0.03rem);
-    top: -0.05rem;
-    width: 0.7rem;
-    text-align: center;
-    color: var(--nuts-accent);
-    font-family: var(--md-code-font-family);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.5;
-    background: var(--md-default-bg-color);  /* hides the line behind the + */
-}
-
-/* A square for the rencontres plénières (and the kickoff), a + for the
-   journées thématiques and the formations */
-.md-typeset .timeline>ul>li:has(> p a[href*="workshop-"])::before,
-.md-typeset .timeline>ul>li:has(> p a[href*="kickoff-"])::before {
-    content: "■";
-    font-size: 0.8rem;
-    line-height: 1.9;  /* keeps the smaller square level with the + */
-}
-
-.md-typeset .timeline>ul>li>p {
-    grid-column: 1;
-    margin: 0 0 0.3rem;
-}
-
-/* Year, place and dates, under the title: a subsubsection heading */
-.md-typeset .timeline>ul>li>h4 {
-    grid-column: 1;
-    margin: 0 0 0.4rem;
-    font-size: 0.95rem;
-    font-weight: 700;
-}
-
-.md-typeset .timeline>ul>li>p:has(> strong > a) {
-    font-size: 1.05rem;
-}
-
-/* Photo on the right */
-.md-typeset .timeline>ul>li>p:has(> img:only-child) {
-    grid-column: 2;
-    grid-row: 1 / span 5;
-    margin: 0;
-}
-
-.md-typeset .timeline>ul>li img {
+/* Thumbnails in tables (Rencontres page) */
+.md-typeset table:not([class]) td img {
     display: block;
-    width: 100%;
+    width: 8rem;
+    max-width: none;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     border-radius: 0.3rem;
 }
 
-@media screen and (max-width: 44.9375em) {
-    .md-typeset .timeline>ul>li {
-        grid-template-columns: 1fr;
-    }
-
-    .md-typeset .timeline>ul>li>p:has(> img:only-child) {
-        grid-column: 1;
-        grid-row: auto;
-        margin-top: 0.6rem;
-    }
-}
 /* Photo at the top of a page (right under its title): full width, e.g. the
    pages of the rencontres */
 .md-typeset h1 + p > img:only-child {
@@ -673,4 +608,23 @@ img.nuts-logo--light,
 
 [data-md-color-scheme="default"] img.nuts-logo--light {
     display: block !important;
+}
+
+/* Blog index: the type of a post (overrides/partials/post.html) as a small
+   label in the yellow of the globes, and excerpt titles in the text color,
+   pink on hover */
+.md-post__type {
+    padding: 0.1em 0.5em;
+    border-radius: 1em;
+    background-color: color-mix(in srgb, #d4a72c 25%, transparent);
+    color: var(--md-default-fg-color);
+    font-size: 0.85em;
+}
+
+.md-post--excerpt .md-typeset h2 a {
+    color: var(--md-default-fg-color);
+}
+
+.md-post--excerpt .md-typeset h2 a:hover {
+    color: var(--nuts-link);
 }

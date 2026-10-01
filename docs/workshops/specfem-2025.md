@@ -1,10 +1,10 @@
 ---
-description: Nantes, 22–23 avril 2025 · Formation
+description: Nantes, les 22 et 23 avril 2025, formation
 ---
 
-# Formation SPECFEM
+# Formation SPECFEM 2025
 
-![Formation SPECFEM](../images/2025-workshop-specfem.jpg)
+![Formation SPECFEM 2025](../images/2025-workshop-specfem.jpg)
 
 Formation à la méthode des éléments spectraux avec le code SPECFEM, dans le cadre du projet européen [ChEESE-2P](https://cheese2.eu/).
 

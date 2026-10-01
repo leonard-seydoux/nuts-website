@@ -10,10 +10,10 @@ Prérequis : Python 3.11+ et [uv](https://docs.astral.sh/uv/). Un seul environne
 
 ```bash
 uv sync                  # installe les dépendances (site et illustrations)
-uv run mkdocs serve --watch overrides --watch hooks
+uv run mkdocs serve --livereload --watch overrides --watch hooks
 ```
 
-Le site est servi sur <http://127.0.0.1:8000/nuts-website/> (le chemin vient de `site_url` dans `mkdocs.yml`) et se recharge à chaque modification des pages, des gabarits et des hooks.
+Le site est servi sur <http://127.0.0.1:8000/nuts-website/> (le chemin vient de `site_url` dans `mkdocs.yml`) et se recharge à chaque modification des pages, des gabarits et des hooks. L'option `--livereload` est nécessaire : avec Click 8.2.2 et plus récent, MkDocs 1.6 désactive sinon le rechargement sans prévenir.
 
 Pour vérifier que tout se construit sans erreur :
 

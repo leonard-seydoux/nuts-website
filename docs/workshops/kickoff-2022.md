@@ -1,10 +1,10 @@
 ---
-description: Paris, 3–4 octobre 2022 · Lancement du réseau
+description: Paris, les 3 et 4 octobre 2022, lancement du réseau
 ---
 
-# Rencontre de lancement
+# Lancement du réseau 2022
 
-![Rencontre de lancement](../images/2022-kickoff.jpg)
+![Lancement du réseau 2022](../images/2022-kickoff.jpg)
 
 ## Présentation
 

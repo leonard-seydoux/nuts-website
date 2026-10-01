@@ -29,8 +29,8 @@ from global_land_mask import globe  # noqa: E402
 
 # GitHub's colors (Primer), shared with the website (docs/stylesheets/extra.css):
 # mid shades of its scales, readable on light and dark backgrounds
-BLUE, GREEN, PINK = "#218bff", "#2da44e", "#db61a2"
-OCEAN_COLOR, LAND_COLOR = BLUE, GREEN
+BLUE, YELLOW, PINK = "#218bff", "#d4a72c", "#db61a2"
+OCEAN_COLOR, LAND_COLOR = BLUE, YELLOW
 ACCENT = PINK  # earthquakes, satellites, meshes, axes, field lines
 
 FONT = "DejaVu Sans Mono"

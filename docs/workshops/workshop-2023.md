@@ -1,10 +1,10 @@
 ---
-description: Lyon, 30 mai – 2 juin 2023 · Apprentissage machine
+description: Lyon, du 30 mai au 2 juin 2023, apprentissage machine
 ---
 
-# 1ère rencontre plénière
+# Journées NuTS 2023
 
-![1ère rencontre plénière](../images/2023-workshop-group-photo.jpg)
+![Journées NuTS 2023](../images/2023-workshop-group-photo.jpg)
 
 ## Présentation
 

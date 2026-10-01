@@ -1,10 +1,10 @@
 ---
-description: Strasbourg, 28–31 mai 2024 · Problèmes inverses
+description: Strasbourg, du 28 au 31 mai 2024, problèmes inverses
 ---
 
-# 2ème rencontre plénière
+# Journées NuTS 2024
 
-![2ème rencontre plénière](../images/2024-workshop-group-photo-2.jpg)
+![Journées NuTS 2024](../images/2024-workshop-group-photo-2.jpg)
 
 ## Présentation
 
