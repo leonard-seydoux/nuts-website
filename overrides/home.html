@@ -57,6 +57,7 @@
         padding-top: 2.4rem;  /* clear the header */
         padding-bottom: 7rem;  /* room for the scroll arrow, lifts the globe */
         position: relative;
+        isolation: isolate;  /* keeps the background below (z-index: -2) inside the hero, above the page */
         overflow: hidden;
     }
 
