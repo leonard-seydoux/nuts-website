@@ -19,7 +19,19 @@ La question qui a guidé la discussion était donc de savoir quels mécanismes a
 
 ## Souveraineté et infrastructures
 
-Héberger, archiver et préserver les codes suppose de choisir des infrastructures. Le CNRS propose une forge nationale pour les laboratoires, le [GitLab Koda](https://src.koda.cnrs.fr/). [Data Terra](https://www.data-terra.org) pourrait de son côté évoluer vers une forge logicielle dotée d'API, et le rôle de l'infrastructure de recherche [EPOS France](https://www.epos-france.fr/) reste à préciser. Pour l'archivage à long terme, [Software Heritage](https://www.softwareheritage.org/), lancé par Inria, conserve le code source. GitHub et GitLab restent enfin très utilisés, mais échappent au contrôle des institutions.
+Héberger, archiver et préserver les codes suppose de choisir des infrastructures. Plusieurs existent déjà, avec des rôles différents :
+
+<div class="compact" markdown>
+
+| Infrastructure | Rôle |
+| --- | --- |
+| [GitLab Koda](https://src.koda.cnrs.fr/) | forge nationale du CNRS pour les laboratoires |
+| [Data Terra](https://www.data-terra.org) | pourrait évoluer vers une forge logicielle dotée d'API |
+| [EPOS France](https://www.epos-france.fr/) | infrastructure de recherche Terre solide, rôle à préciser |
+| [Software Heritage](https://www.softwareheritage.org/) | archive du code source à long terme, lancée par Inria |
+| GitHub, GitLab | très utilisés, mais hors du contrôle des institutions |
+
+</div>
 
 Le groupe s'est demandé si les codes communautaires devaient s'appuyer sur ces infrastructures nationales pour garantir leur pérennité et leur souveraineté.
 

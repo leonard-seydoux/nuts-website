@@ -15,7 +15,20 @@ Ce que sont les revues diamant, ce qui freine leur adoption, et comment la commu
 
 Un [sondage](https://app.wooclap.com/events/NUTS26/questionnaires/6a1813c772f81eb7312cfeba/results) a ouvert la séance. Plus de la moitié des participants (53 %) ne connaissaient pas ces revues, un sur cinq y avait déjà publié, et un sur cinq en est éditeur.
 
-Une revue diamant publie sans frais, ni pour les lecteurs, ni pour les auteurs. Elle est financée par des institutions ou des associations, gérée par la communauté, et ses articles sont sous licence ouverte, le plus souvent CC-BY. C'est ce qui la distingue des autres modèles. Avec l'abonnement, le lecteur paie. Avec l'accès ouvert « gold », l'auteur paie des frais de publication (APC). L'accès ouvert hybride mélange les deux, l'auteur payant pour rendre certains articles gratuits. Le répertoire [DOAJ](https://doaj.org/) indique si une revue facture des frais de publication.
+Une revue diamant publie sans frais, ni pour les lecteurs, ni pour les auteurs. Elle est financée par des institutions ou des associations, gérée par la communauté, et ses articles sont sous licence ouverte, le plus souvent CC-BY. C'est ce qui la distingue des autres modèles :
+
+<div class="compact" markdown>
+
+| Modèle | Qui paie ? |
+| --- | --- |
+| Abonnement | le lecteur |
+| Accès ouvert « gold » | l'auteur, via des frais de publication (APC) |
+| Accès ouvert hybride | le lecteur, ou l'auteur pour rendre un article gratuit |
+| **Accès ouvert diamant** | **ni l'un ni l'autre** |
+
+</div>
+
+Le répertoire [DOAJ](https://doaj.org/) indique si une revue facture des frais de publication.
 
 Le groupe s'est aussi demandé si NuTS devait créer sa propre revue diamant, ou plutôt organiser un numéro spécial récurrent dans une revue existante.
 
@@ -53,4 +66,8 @@ Chacun peut pourtant agir. On peut relire en priorité pour les revues diamant, 
 
 ## Pour aller plus loin
 
-La [cOAlition S](https://www.coalition-s.org/diamond-open-access/) porte un plan d'action pour l'accès ouvert diamant, et [Ouvrir la Science](https://www.ouvrirlascience.fr/) présente le Plan national pour la science ouverte. En France, [Episciences](https://www.episciences.org/) et le [Centre Mersenne](https://www.centre-mersenne.org/) hébergent des revues diamant. [Peer Community In](https://peercommunityin.org/) propose la relecture de prépublications, gratuite pour les auteurs, et [EarthArXiv](https://eartharxiv.org/) accueille les prépublications en sciences de la Terre.
+- [cOAlition S](https://www.coalition-s.org/diamond-open-access/) et son plan d'action pour l'accès ouvert diamant.
+- [Ouvrir la Science](https://www.ouvrirlascience.fr/), le Plan national pour la science ouverte.
+- [Episciences](https://www.episciences.org/) et le [Centre Mersenne](https://www.centre-mersenne.org/), qui hébergent des revues diamant en France.
+- [Peer Community In](https://peercommunityin.org/), la relecture de prépublications, gratuite pour les auteurs.
+- [EarthArXiv](https://eartharxiv.org/), les prépublications en sciences de la Terre.

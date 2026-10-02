@@ -611,8 +611,8 @@ img.nuts-logo--light,
 }
 
 /* Blog index: the type of a post (overrides/partials/post.html) as a small
-   label in the yellow of the globes, and excerpt titles in the text color,
-   pink on hover */
+   label in the yellow of the globes, and excerpt titles in pink, like the
+   other links */
 .md-post__type {
     padding: 0.1em 0.5em;
     border-radius: 1em;
@@ -622,9 +622,5 @@ img.nuts-logo--light,
 }
 
 .md-post--excerpt .md-typeset h2 a {
-    color: var(--md-default-fg-color);
-}
-
-.md-post--excerpt .md-typeset h2 a:hover {
     color: var(--nuts-link);
 }
