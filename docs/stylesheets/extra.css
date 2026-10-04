@@ -449,13 +449,21 @@ body:has(.page-hero) .md-content__inner>h1:first-of-type {
     display: none;
 }
 
+/* Phones: title, then the globe below it, centered */
 @media screen and (max-width: 44.9375em) {
+    .page-hero__inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
     .page-hero h1 {
         font-size: 1.8rem;
     }
 
     .page-hero__video {
-        width: 11rem;
+        align-self: center;
+        width: min(14rem, 70vw);
     }
 }
 
